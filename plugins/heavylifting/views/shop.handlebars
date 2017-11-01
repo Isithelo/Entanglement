@@ -1,86 +1,47 @@
-<div class="row">
-  <div class="col-md-10">
-    <h1>Monitoring</h1>
-    <p>A compilation of tools for processing and viewing CSV SCADA data.</p>
-  </div>
-
-
-  {{#if user}}
-  <div class="col-md-2" style="text-align: right">
-  <div class="btn-group" role="group" aria-label="...">
-<!-- Split button -->
- 
-  <button type="button" class="btn btn-default  btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-right">
-    <li><a  href="" data-toggle="modal" data-target="#myModal" onclick="addIssue('59e837ba9399ad427c493d4f','59ea2a21f7d5bc22d8dafa0b')" title="Add items"><i class="fa fa-plus" aria-hidden="true"></i>  Add a new issue.</a></li>
-    <li><a href="/issues/#59f4ad70b06ad944ac043794_anchor"><i class="fa fa-list" aria-hidden="true"></i>  View associated issues.</a></li>
-  </ul>
- 
-<script type="text/javascript">
-  ////////////////////////////////////////////////////
-////////    BUTTON CLICK ADD NEW DB ITEM  /////////
-//////////////////////////////////////////////////
-function addIssue(form,grouping){
-  loadformModalwrasse(form,'','component',grouping,'','')
-}
-//////////////////////////////////////
-////////    GET FORM BY ID  /////////
-//////////////////////////////////                                                                                                              
-function loadformModalwrasse(formdata,idItem,raw,parentid,headings,entry){
-  console.log( 'Button click : plugins/wrasse/views/issues' )
-  var headings = JSON.stringify(headings)
-  var entry = JSON.stringify(entry)
-  jQuery.ajax({
-    'url': '/issues/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings+'&entry='+entry,
-    'async': true,
-    'global': false,
-    'success': function (dataSchemaObject) {
-      $('#formAreaModal').html(dataSchemaObject)
-    }
-  });
-}
-</script>
-</div>
-  </div>  
-{{/if}}
-
-</div>   <hr>
-<div class="row">
-<div class="col-md-4" id="navMenuPanel" style="min-height: 450px">       
-    <div id="myProgress">
-      <div id="myBar">
+    <div class="row">
+      <div class="col-md-12">
+     
+        <h1>Store </h1>
+      <p>Incorporate O.E.M gear into your system design using equipment components.</p>
+      </div>
+    </div> 
+    <hr>
+    <div class="row">
+      <div class="col-md-4" id="navMenuPanel" style="min-height: 450px">
+        <div id="myProgress">
+          <div id="myBar"> </div>
+        </div>
+        <h5><strong>Navigation</strong> <small>Use the navigation tree to interact with the database.</small></h5>
+        <div class=" ">
+         <div style="padding-bottom:15px;padding-bottom:15px">
+          <input id="search_field" name="searchinput" type="search" placeholder="Search Navigation" class="form-control input-md">      
+        </div>
+        <div id="jstree"></div> 
+      </div>
+      <div id="menuItems"></div>
+    </div>
+    <div class="col-md-8" id="browserArea">
+      <div id="panel">  
+<div class="awesome"><div style="background-color: #fff !important;padding: 5px"><div style="padding:25px"><h3>Heads up! <small>Click on the nodes of the navigation tree to interact with the site.</small></h3><div style="text-align: center"><p>To get started view the <a href="/documentation">Documentation section</a> on this site or sign in / sign up.</p></div> </div></div></div>
       </div>
     </div>
-    <h5><strong>Navigation</strong> <small>Use the navigation tree to interact with the database.</small></h5>
-    <div class=" ">
-     <div style="padding-bottom:15px;padding-bottom:15px">
-      <input id="search_field" name="searchinput" type="search" placeholder="Search Navigation" class="form-control input-md">      
-    </div>
-    <div id="jstree"><pre><i class="fa fa-spinner fa-spin fa-fw"></i><span class=" ">Loading...</span></pre></div> 
   </div>
-  <div id="menuItems"></div>
-</div>  
-<div class="col-md-8" id="browserArea">
-  <div id="panel">  
-<div class="awesome"><div style="background-color: #fff !important;padding: 5px"><div style="padding:25px"><h3>Heads up! <small>Click on the nodes of the navigation tree to interact with the site.</small></h3><div style="text-align: center"><p>To get started view the <a href="/documentation">Documentation section</a> on this site or sign in / sign up.</p></div> </div></div></div>
-  </div>
-</div>
-</div>
+ 
 
-<script type="text/javascript">
-  var databaseid = {{{items}}};
-  var Formids = {{{Formids}}};
-  var navmenuHeadings = ['detail','description','icon','buttons','tabs','parent','template']
-  var databaseMenu = []
-  var temp =[]
+  <script type="text/javascript">
+
+
+
+    var databaseid = {{{items}}};
+    var Formids = {{{Formids}}};
+    var navmenuHeadings = ['detail','description','icon','buttons','tabs','parent','template']
+    var databaseMenu = []
+    var temp =[]
 
 /////////////////////////////
 ////     DEBUG AREA     //// 
 ///////////////////////////
-console.log( 'admin loading' )
+console.log( 'Store loading' )
 console.log( '-------------------------' )
 console.log( 'databaseid : ',databaseid )
 console.log( 'Formids : ',Formids )
@@ -88,7 +49,7 @@ console.log( 'navmenuHeadings : ',navmenuHeadings )
 console.log( 'databaseMenu : ',databaseMenu )
 console.log( 'temp : ',temp )
 console.log( '-------------------------' )
-console.log( 'admin loading' )
+console.log( 'Store loading' )
 
 
 
@@ -103,20 +64,15 @@ function jstreeGet(ids){
     'global': false,
     'success': function (dataSchemaObject) {
       var dataSchemaObject = JSON.parse(dataSchemaObject)
-
-      
       //Add the headings to the page.
       $('#descriptions').html(dataSchemaObject.thisitem[0].name)
       $('#details').html(dataSchemaObject.thisitem[0].detail)
-
-      $('#panel').html('<div class="awesome"><div style="background-color: #fff !important;padding: 5px"><div style="padding:25px"><h3>Heads up! <small>Click on the nodes of the navigation tree to interact with the site.</small></h3><div style="text-align: center"><p>To get started view the <a href="/documentation">Documentation section</a> on this site or sign in / sign up.</p></div> </div></div></div>')
-
+      $('#panel').html('')
       var dataSchemaObject1 = fitstFormat(dataSchemaObject.children)
       //manipulate data to work with the jstree
       var jsTreeData = dataJStreeConvert (dataSchemaObject1)
       var location = 'jstree'
-      $('#'+location).html('')
-      //load the jstree
+      $('#panel').html('<div class="awesome"><div style="background-color: #fff !important;padding: 5px"><div style="padding:25px"><h3>Heads up! <small>Click on the nodes of the navigation tree to interact with the site.</small></h3><div style="text-align: center"><p>To get started view the <a href="/documentation">Documentation section</a> on this site or sign in / sign up.</p></div> </div></div></div>')      //load the jstree
       //change the primary page id variable , used for the parent
       databaseid = ids
       loadNavMenu(location,jsTreeData)
@@ -236,7 +192,7 @@ function loadNavMenu(location,dataNav){
       "keep_selected_style" : false
     },
     "multiple": false,
-    "plugins" : [  "search" , "state"]
+    "plugins" : [   "search" , "state"]
   });
 
 /////////////////////////////////
@@ -280,9 +236,7 @@ $('#newMenuItem').click(function(){
   //console.log(temp[0].id)
   newMenuItems(Formids,'','use',databaseid,'',navmenuHeadings)
 })
-
-
-console.log('Admin Page')
+console.log('Store Page')
 console.log('---------------------------')
 console.log(' databaseid :', databaseid )
 console.log(' Formids :', Formids )
@@ -290,14 +244,10 @@ console.log(' navmenuHeadings :', navmenuHeadings )
 console.log(' databaseMenu :', databaseMenu )
 console.log(' temp :', temp )
 console.log('---------------------------')
-console.log('Admin Page')
-
+console.log('Store Page')
 //Expand and Collapse all buttons.
 var html = '<p></p><div style="text-align:center;position:absolute;top:75px;right:15px"><button id="expandBtn" class="btn btn-default btn-xs"><i class="fa fa-plus-square-o" aria-hidden="true"></i></button><button id="collapseBtn" class="btn btn-default btn-xs"><i class="fa fa-minus-square-o" aria-hidden="true"></i></button></div>'
 $('#menuItems').append(html)
-
-
-
 jQuery('#expandBtn').click(function () {
  jQuery('#'+location).jstree('open_all');
 });
@@ -305,7 +255,6 @@ jQuery('#collapseBtn').click(function () {
  jQuery('#'+location).jstree('close_all');
 });
 //Expand and Collapse all buttons.
-
 }
 
 ///////////////////////////////////////////////////////
@@ -317,7 +266,7 @@ if(ids){
   jQuery.ajax({
    'async': true,
    'global': false,
-   'url': '/templateload?ids='+ids,
+   'url': '/productload?ids='+ids,
    'success': function (dataSchemaObject) {
      jQuery('#panel').html("")
      jQuery('#panel').html(dataSchemaObject)

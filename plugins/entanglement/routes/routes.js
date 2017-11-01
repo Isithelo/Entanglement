@@ -130,13 +130,12 @@ var entanglementController = require(directory+'controllers/entanglementpages');
 ///////////////////////////////////
 ////       COMPONENTS         //// 
 /////////////////////////////////
-app.get('/monitoring', entanglementController.monitoring);
+
 app.get('/brief', entanglementController.brief);
  
 ///////////////////////////   THESE ROUTES CAN BE REMOVED FOR CUSTOM SITES   ///////////////////////////
- 
- 
- 
-
+  
+app.get('/monitoring', entanglementController.monitoring);
+app.get('/issues/groups', entanglementController.groups);//get the select groups
 //last line
 module.exports = app;

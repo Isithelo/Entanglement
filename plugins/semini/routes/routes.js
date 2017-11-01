@@ -154,6 +154,7 @@ app.get('/forms/templateload', readController.templateload);//Load Template
 app.get('/forms/templatename', readController.templatename);//get the select templatename
 app.get('/forms/getdatacomp', readController.getdatacomp);//get data by array of ids.
 app.get('/forms/getform',  readController.getform);//search for the form to load.
+app.get('/forms/groups', readController.groups);//get the select groups
 
 //last line
 module.exports = app;

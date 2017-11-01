@@ -1,4 +1,4 @@
-var formModel      = require('../models/forms.js');
+var formsModel      = require('../models/forms.js');
 var ObjectId = require('mongodb').ObjectID;
 var directory = '../../../plugins/semini/views/'
 
@@ -63,7 +63,7 @@ if (!entry) {
   entry =''
 }
   //Determine how many forms exist on the server.
-  var query1 = formModel.find().limit(1)
+  var query1 = formsModel.find().limit(1)
   query1.exec(function (err, results) {
     if(err){console.log('Error Here'); return;}
     formdata = results[0]._id
@@ -119,7 +119,7 @@ if (!entry) {
   entry =''
 }
   //Determine how many forms exist on the server.
-  var query1 = formModel.find().limit(2)
+  var query1 = formsModel.find().limit(2)
   query1.exec(function (err, results) {
     if(err){console.log('Error Here'); return;}
     formdata = results[1]._id
@@ -178,7 +178,7 @@ console.log('-----------getdata------------')
 ///////////////////////////
 var temp =""
 
-var query = formModel.find(
+var query = formsModel.find(
 {
   $and : 
   [
@@ -191,7 +191,7 @@ var query = formModel.find(
     }
     ]
   })
-var query1 = formModel.find(
+var query1 = formsModel.find(
 {
   $and : 
   [
@@ -252,7 +252,7 @@ exports.jstree = function(req, res) {
   debugging(req,debugMode)
   var ids = req.query.ids
 
-  var query = formModel.find(
+  var query = formsModel.find(
   {
     $and : 
     [
@@ -265,7 +265,7 @@ exports.jstree = function(req, res) {
       }
       ]
     })
-  var query1 = formModel.find(
+  var query1 = formsModel.find(
   {
     "active": "true" ,
     "parentid": ids,      
@@ -308,7 +308,7 @@ var childitem=''
 //  1.RETURN CURRENT ITEM  //
 ////////////////////////////
 //Query to find the menu item selected.
-var query = formModel.findOne(
+var query = formsModel.findOne(
 {
   $and : 
   [
@@ -332,7 +332,7 @@ query.exec(function (err, query_return) {
 ///////////////////////////
 // 2.RETURN CHILD ITEM  //
 /////////////////////////
-var query1 = formModel.find(
+var query1 = formsModel.find(
 {
   $and : 
   [
@@ -348,7 +348,7 @@ var query1 = formModel.find(
 ////////////////////////////////////////////////////////////////////
 // 3.RETURN THE ASSOCIATED FORM ELMENTS OF THE ABOVE CHILD ITEM  //
 //////////////////////////////////////////////////////////////////
-var query2 = formModel.find(
+var query2 = formsModel.find(
 {
   $and : 
   [
@@ -363,7 +363,7 @@ var query2 = formModel.find(
 ///////////////////////////////////////
 //  4.ENTRIES CREATED BY THIS FORM  //
 /////////////////////////////////////
-var query3 = formModel.find(
+var query3 = formsModel.find(
 {
   $and : 
   [
@@ -378,7 +378,7 @@ var query3 = formModel.find(
 ///////////////////////////////////////
 //  5.LEGACY ITEM FOR PRIMER FORMS  //
 /////////////////////////////////////
-var query4 = formModel.find(
+var query4 = formsModel.find(
 {
   'entry.parent' : childitem,
   'active' : 'true'
@@ -386,7 +386,7 @@ var query4 = formModel.find(
 ///////////////////////////////
 //  6.THE TEMPLATE TO LOAD  //
 //////////////////////////////
-var query5 = formModel.findOne(
+var query5 = formsModel.findOne(
 {
   $and : 
   [
@@ -573,7 +573,7 @@ if (!entry) {
   entry =''
 }
 //There is a requirement to limit the form size  , as such send the find and send the headings from the parent.
-var query1 = formModel.find(
+var query1 = formsModel.find(
 {
   $and : 
   [
@@ -591,7 +591,7 @@ query1.exec(function (err, parentItem) {
   if(err){console.log('Error Here'); return;}
 //This is used to pull the first 2 entries from the database. 
 //will return the ids for the form data on the primer and raw database entry.
-formModel.find().limit(3).exec(function (err, forms) {
+formsModel.find().limit(3).exec(function (err, forms) {
   if(err){console.log('Error Here'); return;}
   //The primer and Raw are the first 2 items in the database.
   //This does mean the that the forms are not being edited.
@@ -673,7 +673,7 @@ if (!raw) {
 }
 
 //Find the data to be viewed on the form.
-var query1 = formModel.find(
+var query1 = formsModel.find(
 {
   $and : 
   [
@@ -689,18 +689,18 @@ var query1 = formModel.find(
 /////////////////////////////
 ////      DEBUG         //// 
 ///////////////////////////
- 
+/*
 console.log('-----------getdatacomp------------')
 console.log('formdata : ',JSON.stringify(formdata))
 console.log('idItem : ',JSON.stringify(idItem))
 console.log('raw :',JSON.stringify(raw))
 console.log('-----------getdatacomp------------')
- 
+*/
 /////////////////////////////
 ////      DEBUG         //// 
 ///////////////////////////
 //find all of the parentid equal .
-formModel.find({
+formsModel.find({
   'parentid' : formdata,
   'active' : 'true'
 }).exec(function (err, form) {
@@ -734,4 +734,42 @@ res.send({
 });
 })
 })
+}
+
+
+
+//////////////////////////////////////////
+///////////   READ  GROUPS  /////////////
+////////////////////////////////////////
+exports.groups = function(req, res) {
+  //Debugging  
+debugging(req,debugMode)
+  formsModel.
+  find({
+    'entry.parent' :req.param('data'),
+    'active' : 'true'
+  }).
+  exec(function (err, docs1) {
+    if(err){console.log('Error Here'); return;}   
+
+
+    if(docs1){
+      for (var i = 0; i < docs1.length; i++) {
+        //the menu item elementid should arrive poulated to avoid confusion.
+        if(docs1[i].elementID==''){
+          docs1[i].elementID=docs1[i]._id
+        }
+      }
+    } else {
+      console.log('docs1 failed')
+    } 
+
+
+/*
+console.log('-----------groups------------')
+console.log('docs1 : ',JSON.stringify(docs1))
+console.log('-----------groups------------')
+*/
+res.send(JSON.stringify(docs1));
+});
 }

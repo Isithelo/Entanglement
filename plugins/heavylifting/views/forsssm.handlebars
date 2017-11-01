@@ -1,16 +1,30 @@
+<style type="text/css">
+  .cropit-preview {
+    /* You can specify preview size in CSS */
+    width: 200px;
+    height: 200px;
+  }
+</style> 
 
-<div id="formDelivery">
-  <div style="text-align: center;">
-    <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i>
-    <span>Loading...</span>  
+<div class="row">
+  <div class="col-md-8" id="colLeft">
+    <div style="padding-left: 10px">
+    </div> 
+    <div id="mapLoad"></div>
+    <div id="formDelivery"></div>
+  </div>  
+  <div class="col-md-4">
+    <div id="cropit"></div>
   </div>
+  <div class="col-md-0" id="colRight">
+   <div id="navig" data-spy="affix" data-offset-top="10">
+    <div id="pickerArea" style="overflow: auto;"></div>
+  </div>
+</div>  
 </div>
 
-
-
-
 <script type="text/javascript">
-  var username = "{{user.username}}"
+
   var formdata = {{{formdata}}}
   var owner
   var userpermission
@@ -27,13 +41,13 @@
   var googleMapsObject
 
   {{#if query2}}
-  var query2 = {{{query2}}}
+
   {{else}}
   
   {{/if}}
-  
+  var query2 = {{{query2}}}
 
-var WYSIWYG = []
+
 
 
   {{#if headings}}
@@ -45,7 +59,7 @@ var WYSIWYG = []
 ////////////////////////////////////
 ////        DEBUG AREA         //// 
 //////////////////////////////////
-console.log( 'Tempalte Name : plugins/semini/views/form' )
+console.log( 'form loading' )
 console.log( '-------------------------' )
 console.log( 'formdata :',formdata )
 console.log( 'idItem :',idItem )
@@ -61,7 +75,7 @@ console.log( 'entry :',entry )
 var entry
 {{/if}}
 console.log( '-------------------------' )
-console.log( 'Tempalte Name : plugins/semini/views/form' )
+console.log( 'form loading' )
 ////////////////////////////////////
 ////        DEBUG AREA         //// 
 //////////////////////////////////
@@ -101,7 +115,7 @@ $(document).ready(function(){
 ///////////////////////////////////////////////////////
 function getdatacomp(formdata,idItem,raw){
   jQuery.ajax({
-    'url': '/forms/getdatacomp?formdata='+formdata+'&idItem='+idItem+'&raw='+raw,
+    'url': '/getdatacomp?formdata='+formdata+'&idItem='+idItem+'&raw='+raw,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -118,7 +132,7 @@ function getdatacomp(formdata,idItem,raw){
 ///////////////////////////////////////
 function getdata(formdata,idItem,raw){
   jQuery.ajax({
-    'url': '/forms/getdata?formdata='+formdata+'&idItem='+idItem+'&raw='+raw,
+    'url': '/getdata?formdata='+formdata+'&idItem='+idItem+'&raw='+raw,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -132,6 +146,7 @@ function getdata(formdata,idItem,raw){
 ///////////////////////////////////////////
 function formatAlpaca(objectOld) {
   var tempSchema ={
+
     "type" : "object",
     "properties" : {
     }
@@ -161,8 +176,8 @@ if (objectOld.formdata[i].entry.dependencies) {
 switch (true){
   case(objectOld.formdata[i].entry.type =='string'):
   tempSchema.properties[objectOld.formdata[i]['elementID']] = {
-    'type' : objectOld.formdata[i].entry.type,
-    "title":objectOld.formdata[i].entry.description,
+    'type' : objectOld.formdata[i].entry.type ,
+    "title":objectOld.formdata[i].entry.description ,
     "dependencies": tempDepend
   }
   tempoptions.fields[objectOld.formdata[i]['elementID']] = {
@@ -171,7 +186,7 @@ switch (true){
   break;
   case(objectOld.formdata[i].entry.type =='checkbox'):
   tempSchema.properties[objectOld.formdata[i]['elementID']] = {
-    "title":objectOld.formdata[i].entry.description,
+    "title":objectOld.formdata[i].entry.description ,
     "dependencies": tempDepend
   }
   tempoptions.fields[objectOld.formdata[i]['elementID']] = {
@@ -185,7 +200,7 @@ switch (true){
     "dependencies": tempDepend,
   }
   tempoptions.fields[objectOld.formdata[i]['elementID']] = {
-    "helper":objectOld.formdata[i].entry.description,
+    "helper":objectOld.formdata[i].entry.description ,
     'view' : 'bootstrap-display',
   }  
   break;
@@ -200,39 +215,6 @@ switch (true){
     'field':objectOld.formdata[i].entry.objectType
   }
   break;
-
-
-  case(objectOld.formdata[i].entry.type =='field'):
-  tempSchema.properties[objectOld.formdata[i]['elementID']] = {
-    "title":objectOld.formdata[i].entry.description,
-    "dependencies": tempDepend,
-  }
-  tempoptions.fields[objectOld.formdata[i]['elementID']] = {
-    "helper":objectOld.formdata[i].entry.detail,
-    'type' : "select",
-    'field':objectOld.formdata[i].entry.objectType
-  }
-  break;
-
-  case(objectOld.formdata[i].entry.type =='WYSIWYG'):
-  tempSchema.properties[objectOld.formdata[i]['elementID']] = {
-    "title":objectOld.formdata[i].entry.description,
-    "dependencies": tempDepend
-  }
-  tempoptions.fields[objectOld.formdata[i]['elementID']] = {
-    "type": "textarea",
-    "rightLabel":[objectOld.formdata[i].entry.detail]
-  }   
-  
-
-
-WYSIWYG.push(objectOld.formdata[i]['elementID'])    
-
-
-
-
-  break;
-
 
   case(objectOld.formdata[i].entry.type =='multi'):
   tempSchema.properties[objectOld.formdata[i]['elementID']] = {
@@ -282,8 +264,6 @@ tempoptions.fields[objectOld.formdata[i]['elementID']] = {
 } 
 }  
 loadMap(location,lat,long)
-
-
 break;
 
 
@@ -367,7 +347,7 @@ break;
 
 default:
 tempSchema.properties[objectOld.formdata[i]['elementID']] = {
-  "title":objectOld.formdata[i].entry.description,
+  "title":objectOld.formdata[i].entry.description + ' (' + objectOld.formdata[i].entry.units + ')',
   "dependencies": tempDepend
 }
 tempoptions.fields[objectOld.formdata[i]['elementID']] = {
@@ -393,20 +373,13 @@ initiateForm(data)
 ////        CREATE THE FORM        //// 
 ////////////////////////////////////////
 function initiateForm(data){
-
-
-if (!data.formdata) {
-  $('#'+formid1).html('<div class="alert alert-danger" role="alert"><strong>Heads Up!</strong> Try adding a childType to the raw json entry for this element or just copy one of the existing elements.</div>')
-  return
-}
-
  var form = {
   schema : data.formdata.entry['schema'],
   options : data.formdata.entry['options']
 }
  //----------------------------------------------------------------------------------------------
  if (raw!='component' && raw!='componentedit' && raw!='componentcopy') {
-  if (raw!='raw' && raw!='copyraw' && raw!='edit' && raw!='self' && raw!='use') {
+  if (raw!='raw' && raw!='copyraw') {
   //Used for the limiting of visible fields on the form. Specically the 'headings' field.
   //----------------------------------------------------------------------------------------------
   var tableHeadings =[]
@@ -485,44 +458,26 @@ switch (true) {
   temp = arr[index]['field']
   break;
 }
-if (!temp == undefined) {
-
-  arr[index]["dataSource"] = function(callback) {
-
-    jQuery.ajax({
-      'async': true,
-      'global': false,
-      'url': '/forms/getformfield?data='+temp ,
-      'success': function (dataSchemaObject) {
-        if (dataSchemaObject) {
-          var dataSchemaObject = JSON.parse(dataSchemaObject);
-          htmlPicker(dataSchemaObject,temp)
-          var tempVar =[]
-          for (var i = 0; i < dataSchemaObject.length; i++) {
-            tempVar.push(dataSchemaObject[i].entry[temp])
-          }
-          callback(tempVar);
-        }  
-      }
-    }); 
-  }
+arr[index]["dataSource"] = function(callback) {
+  jQuery.ajax({
+    'async': true,
+    'global': false,
+    'url': '/getformfield?data='+temp ,
+    'success': function (dataSchemaObject) {
+      if (dataSchemaObject) {
+        var dataSchemaObject = JSON.parse(dataSchemaObject);
+        htmlPicker(dataSchemaObject,temp)
+        var tempVar =[]
+        for (var i = 0; i < dataSchemaObject.length; i++) {
+          tempVar.push(dataSchemaObject[i].entry[temp])
+        }
+        callback(tempVar);
+      }  
+    }
+  }); 
 }
 }
 });
-
-
-/////////////////////////////////////////////////////////
-////        ACTIVATE WYSIWYG FORMS ELEMENTS         //// 
-/////////////////////////////////////////////////////////
-function wysiwyg(){
-  for (var i = 0; i < WYSIWYG.length; i++) {
-  $('[name="'+WYSIWYG[i]+'"]').froalaEditor({ 
-    toolbarButtons: ['undo', 'redo' , 'bold', '|', 'alert', 'clear', 'insert'],
-    heightMin: 250,
-      heightMax: 250
-  })
-}
-}
 
 
 switch(true){
@@ -538,7 +493,6 @@ switch(true){
     "schema": schema,
     "options": options,
     "postRender": function(control) {
-      wysiwyg()
       //only set the data if the form is for use.
       if (idItem !='') {
         $("#form_"+formdata+idItem+formid1).alpaca('get').setValue(data.idItem.entry)
@@ -551,7 +505,6 @@ switch(true){
     "schema": schema,
     "options": options,
     "postRender": function(control) {
-      wysiwyg()
       //only set the data if the form is for use.
       if (idItem !='') {
         $("#form_"+formdata+idItem+formid1).alpaca('get').setValue(data.idItem)
@@ -564,7 +517,6 @@ switch(true){
     "schema": schema,
     "options": options,
     "postRender": function(control) {
-      wysiwyg()
       //only set the data if the form is for use.
       if (idItem !='') {
         $("#form_"+formdata+idItem+formid1).alpaca('get').setValue(data.idItem.entry)
@@ -577,14 +529,15 @@ switch(true){
     "schema": schema,
     "options": options,
     "postRender": function(control) {
-      wysiwyg()
       //only set the data if the form is for use.
       findandappendSelect()
       if (idItem !='') {
         $("#form_"+formdata+idItem+formid1).alpaca('get').setValue(data.idItem.entry)
+        
         lat = 0
         long = 0
         mapset(data.idItem.entry)
+
       }
     }    
   });
@@ -594,7 +547,6 @@ switch(true){
     "schema": schema,
     "options": options,
     "postRender": function(control) {
-      wysiwyg()
       //only set the data if the form is for use.
       if (idItem !='') {
         $("#form_"+formdata+idItem+formid1).alpaca('get').setValue(data.idItem.entry)
@@ -610,7 +562,7 @@ switch(true){
   var html = ''
   html += '<div class="alert alert-danger" role="alert"> '
   html += '<strong>'
-  html += 'Oh Snap!'
+  html += 'Oh snap!'
   html += '</strong> '
   html += 'Form error , form usage type is not defined.'
   html += '</div>'
@@ -621,7 +573,7 @@ switch(true){
   var html = ''
   html += '<div class="alert alert-danger" role="alert"> '
   html += '<strong>'
-  html += 'Oh Snap!'
+  html += 'Oh snap!'
   html += '</strong> '
   html += 'Form error , This dataset is not a form , Please let us know about this.'
   html += '</div>'
@@ -715,7 +667,7 @@ switch(true){
       primer.organizationowner = owner
     }
   } else {
-    primer.userowner = username
+    primer.userowner = user.username
   }
   if (detail) {
     primer.detail = detail
@@ -777,7 +729,7 @@ switch(true){
   var html = ''
   html += '<div class="alert alert-danger" role="alert"> '
   html += '<strong>'
-  html += 'Oh Snap!'
+  html += 'Oh snap!'
   html += '</strong> '
   html += 'Form error , form usage type is not defined.'
   html += '</div>'
@@ -787,7 +739,7 @@ switch(true){
 
 //Jquery send to server
 jQuery.ajax({
-  'url': '/forms/createform',
+  'url': '/create',
   'type': 'POST', 
   'dataType': 'json',
   'contentType': 'application/json', 
@@ -795,24 +747,17 @@ jQuery.ajax({
   'success': function (dataSchemaObject) {
     $('#myModal').modal('hide')
           //pageLoad(databaseid)
-          if (dataSchemaObject.redirect =="/signin") {
-            window.location =dataSchemaObject.redirect
-          } else { 
-            if (parentItem.route) {
-             window.location = parentItem.route
-           } else {
-             window.location.reload()
-           }
+          if (parentItem.route) {
+           window.location = parentItem.route
+         } else {
+           window.location.reload()
          }
        },
        'error' :function (dataSchemaObject) {
-        console.log(dataSchemaObject)
         $('#myModal').modal('hide')
       //pageLoad(databaseid)
       if (parentItem.route) {
        //window.location = parentItem.route
-       var temp = '/signin'
-       window.dataSchemaObject
      } else {
       var temp = '/signin'
       window.temp
@@ -907,7 +852,6 @@ function displayLocationElevation(location, elevator) {
 //////////   ADDING THE MORE INFO BUTTON       /////////
 ///////////////////////////////////////////////////////
 function findandappendSelect(){
-
   if (query2) { 
     for (var i = 0; i < query2.length; i++) {
       if(query2[i].entry.objectType ){
@@ -1068,7 +1012,7 @@ htmlcompile[indexOverwrite] = {
 }
 }); 
   } else {
-    var html = '<div class="alert alert-danger" role="alert"> <strong>Oh Snap!</strong> An error occured loading database information. Please let us know about this. </div>'
+    var html = '<div class="alert alert-danger" role="alert"> <strong>Oh snap!</strong> An error occured loading database information. Please let us know about this. </div>'
     htmlcompile[indexOverwrite] = {
       'html' : html,
       'rawData' : htmldata,

@@ -203,12 +203,21 @@ app.set('views', path.join(__dirname, 'plugins/semini/views/'));
 var seminiRouting = require('./plugins/semini/routes/routes');
 app.use('/', seminiRouting);
  
+//HEAVY-LIFTING
+//Set Handlebars view directory for plugins
+app.set('views', path.join(__dirname, 'plugins/heavylifting/views/'));
+//Fratenate Routing
+var heavyliftingRouting = require('./plugins/heavylifting/routes/routes');
+app.use('/', heavyliftingRouting);
+
 //ENTANGLEMENT
  //Set Handlebars view directory for plugins
 app.set('views', path.join(__dirname, 'plugins/entanglement/views/'));
 //Fratenate Routing
 var entanglementRouting = require('./plugins/entanglement/routes/routes');
 app.use('/', entanglementRouting);
+
+ 
 
 /////////////////////////////
 ////       404          //// 

@@ -35,11 +35,7 @@ var items = {{{query}}}
 //The applicable form for use ( query.childtype)
 var query1 = {{{query1}}}
 //The form in queston
-  {{#if query2}}
-  var query2 = {{{query2}}}
-  {{else}}
-  var query2
-  {{/if}}
+var query2 = {{{query2}}}
 //the form elements.
 var query3 = {{{query3}}}
 //the form datasets.
@@ -50,7 +46,7 @@ var tablelistdata = {{{query3}}};
 //Unique if for the forms.
 var formids = create_uid()
 
-var templateloadwrasse = {{{templateloadwrasse}}}
+var templateload = {{{templateload}}}
 
 
 /////////////////////////////////////
@@ -77,7 +73,7 @@ return parseFloat(a.entry.order) - parseFloat(b.entry.order);
 /////////////////////////////
 ////     DEBUG AREA     //// 
 ///////////////////////////
-console.log( 'Template Loading : plugins/wrasse/views/group' )
+console.log( 'Group loading' )
 console.log( '-------------------------' )
 console.log( 'items : ',items )
 console.log( 'query1 : ',query1 )
@@ -87,7 +83,7 @@ console.log( 'query4 : ',query4 )
 console.log( 'tablelistdata : ',tablelistdata )
 console.log( 'formids : ',formids )
 console.log( '-------------------------' )
-console.log( 'Template Loading : plugins/wrasse/views/group' )
+console.log( 'Group loading' )
 
 
 if(items.elementID) {
@@ -130,7 +126,7 @@ if (!items.elementID) {
     jQuery.ajax({
       'async': true,
       'global': false,
-      'url': '/forms/groups?data='+ids,
+      'url': '/groups?data='+ids,
       'success': function (dataSchemaObject) {
         input = JSON.parse(dataSchemaObject);
         groupShow(input)
@@ -194,11 +190,11 @@ function viewCatagory(id){
 function layoutView() {
 if (items.entry.layout) {
  for (var i = 0; i < items.entry.layout.length; i++) {
-    templateLoadwrasse(items.entry.layout[i],'toolbar')
+    templateLoad(items.entry.layout[i],'toolbar')
  }
 }  else {
-  templateLoadwrasse(['parentraw'],'toolbar')
-  templateLoadwrasse(['add'],'toolbar')
+  templateLoad(['parentraw'],'toolbar')
+  templateLoad(['add'],'toolbar')
 }
 }
 
@@ -228,18 +224,18 @@ function deployForm(parentid){
   var entry = {
                       parent : parentIdTemp,
                   }
-  loadformModalwrasse(parentid,'','use',items.parentid,headings,entry)
+  loadformModal(parentid,'','use',items.parentid,headings,entry)
 }
 
 //////////////////////////////////////
 ////////    GET FORM BY ID  /////////
 ////////////////////////////////////                                                                                                              
-function loadformModalwrasse(formdata,idItem,raw,parentid,headings,entry){
+function loadformModal(formdata,idItem,raw,parentid,headings,entry){
   console.log(formdata,idItem,raw,parentid,headings)
   var headings = JSON.stringify(headings)
   var entry = JSON.stringify(entry)
   jQuery.ajax({
-    'url': '/forms/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings+'&entry='+entry,
+    'url': '/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings+'&entry='+entry,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -252,19 +248,19 @@ function loadformModalwrasse(formdata,idItem,raw,parentid,headings,entry){
 ////////    BUTTON CLICK OPEN RAW FORM  /////////
 ////////////////////////////////////////////////
 function deployparentrawForm(parentid){
-  loadformModalwrasse(parentid,parentid,'raw',parentid)
+  loadformModal(parentid,parentid,'raw',parentid)
 }
 
 ///////////////////////////////////
 ////////  LOADING OF TOOLS ///////
 /////////////////////////////////
-function templateLoadwrasse(template,location){
+function templateLoad(template,location){
 //Ensure that the first load error is covered , also any other errors.
 if(template){
   jQuery.ajax({
    'async': true,
    'global': false,
-   'url': '/forms/templatename?template='+template,
+   'url': '/templatename?template='+template,
    'success': function (dataSchemaObject) {
      jQuery('#'+location).append(dataSchemaObject)
    }
@@ -280,7 +276,7 @@ function deployFormComponent(formToUse){
   //This is hard wired , and likely to cause issues.
   var headings = ["description","detail","icon","headings"]
   var entry =''
-   loadformModalwrasse(formToUse,'','component',items.elementID,headings,entry)
+   loadformModal(formToUse,'','component',items.elementID,headings,entry)
 }
 
 //////////////////////////////////////////////
@@ -290,7 +286,7 @@ function deployFormUse(formToUse){
   //This is hard wired , and likely to cause issues.
   var headings = ["description","detail","icon","headings"]
   var entry =''
-  loadformModalwrasse(formToUse,'','use',templateloadwrasse,headings,entry)
+  loadformModal(formToUse,'','use',templateload,headings,entry)
 }
 
 //////////////////////////////////////////////
@@ -319,7 +315,7 @@ function modifybutton(parentid){
   var entry = {
     parent : parentIdTemp,
   }
-  loadformModalwrasse(parentid,parentIdTemp,'self',items.parentid,headings,entry)
+  loadformModal(parentid,parentIdTemp,'self',items.parentid,headings,entry)
 }
 
 //////////////////////////////////////////////////
@@ -327,7 +323,7 @@ function modifybutton(parentid){
 ////////////////////////////////////////////////
 function deployparentrawForm(parentid){
      parentid = parentid.replace('_parentraw', '');
-  loadformModalwrasse(parentid,parentid,'raw',parentid)
+  loadformModal(parentid,parentid,'raw',parentid)
 }
 
 //////////////////////////////////////////////////
@@ -335,16 +331,16 @@ function deployparentrawForm(parentid){
 ////////////////////////////////////////////////
 function copyParentRaw(parentid){
   parentid = parentid.replace('_copy', '');
-  loadformModalwrasse(parentid,parentid,'copyraw',parentid)
+  loadformModal(parentid,parentid,'copyraw',parentid)
 }
 
 //////////////////////////////////////
 ////////    GET FORM BY ID  /////////
 ////////////////////////////////////                                                                                                              
-function loadformModalwrasse(formdata,idItem,raw,parentid,headings){
+function loadformModal(formdata,idItem,raw,parentid,headings){
   var headings = JSON.stringify(headings)
   jQuery.ajax({
-    'url': '/forms/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings,
+    'url': '/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -358,7 +354,7 @@ function loadformModalwrasse(formdata,idItem,raw,parentid,headings){
 ////////////////////////
 function useForm(id){
   id = id.replace('_use', '');
-  loadformModalwrasse(id,'','use',id)
+  loadformModal(id,'','use',id)
 }
 
 //////////////////////////
@@ -370,9 +366,9 @@ function modifyItem(id){
   childType = $('#'+id+'').data('childtype')
   //Used for the check self when modifiing.
   if (!childType) {
-    loadformModalwrasse(id,id,'self',id,headings)
+    loadformModal(id,id,'self',id,headings)
   } else {
-    loadformModalwrasse(childType,id,'self',id,headings)
+    loadformModal(childType,id,'self',id,headings)
   }
 }
 
@@ -384,9 +380,9 @@ function tableraw(id){
   childType = $('#'+id+'').data('childtype')
   //Used for the check self when modifiing.
   if (!childType) {
-    loadformModalwrasse(id,id,'raw',id)
+    loadformModal(id,id,'raw',id)
   } else {
-    loadformModalwrasse(childType,id,'raw',id)
+    loadformModal(childType,id,'raw',id)
   }
 }
 
@@ -399,9 +395,9 @@ function createComp(id){
   //there is some kind of wierd lowcase requiremtns.
   parentid = $('#'+id+'').data('parentid')
   if (!childType) {
-    loadformModalwrasse(childType,'','use',id)
+    loadformModal(childType,'','use',id)
   } else {
-    loadformModalwrasse(parentid,'','use',id)
+    loadformModal(parentid,'','use',id)
   }
 }
 
