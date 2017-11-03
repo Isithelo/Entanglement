@@ -122,7 +122,7 @@ var app = express.Router();
 var directory = '../../../plugins/entanglement/'
 
 // Controllers
- 
+var readController = require(directory+'controllers/read');
 
 ///////////////////////////   THESE ROUTES CAN BE REMOVED FOR CUSTOM SITES   ///////////////////////////
 var entanglementController = require(directory+'controllers/entanglementpages'); 
@@ -136,6 +136,20 @@ app.get('/brief', entanglementController.brief);
 ///////////////////////////   THESE ROUTES CAN BE REMOVED FOR CUSTOM SITES   ///////////////////////////
   
 app.get('/monitoring', entanglementController.monitoring);
-app.get('/issues/groups', entanglementController.groups);//get the select groups
+app.get('/entanglement/groups', entanglementController.groups);//get the select groups
+
+
+/////////////////////////////////////////
+////       READ CONTROLLERS         //// 
+///////////////////////////////////////
+app.get('/entanglement/getprimer',   readController.getprimer);//get the primer form.
+app.get('/entanglement/getraw',   readController.getraw);//get the raw form.
+app.get('/entanglement/jstree', readController.jstree);//get jstree 
+app.get('/entanglement/templateload', readController.templateload);//Load Template
+app.get('/entanglement/templatename', readController.templatename);//get the select templatename
+app.get('/entanglement/getdatacomp', readController.getdatacomp);//get data by array of ids.
+app.get('/entanglement/getform',  readController.getform);//search for the form to load.
+app.get('/entanglement/groups', readController.groups);//get the select groups
+
 //last line
 module.exports = app;

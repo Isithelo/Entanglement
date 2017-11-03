@@ -2,6 +2,8 @@
   <div class="col-md-10">
     <h1>Monitoring</h1>
     <p>A compilation of tools for processing and viewing CSV SCADA data.</p>
+
+
   </div>
 
 
@@ -34,7 +36,7 @@ function loadformModalwrasse(formdata,idItem,raw,parentid,headings,entry){
   var headings = JSON.stringify(headings)
   var entry = JSON.stringify(entry)
   jQuery.ajax({
-    'url': '/issues/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings+'&entry='+entry,
+    'url': '/entanglement/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings+'&entry='+entry,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -80,7 +82,7 @@ function loadformModalwrasse(formdata,idItem,raw,parentid,headings,entry){
 /////////////////////////////
 ////     DEBUG AREA     //// 
 ///////////////////////////
-console.log( 'admin loading' )
+console.log( 'Template Loading : plugins/entanglement/views/Monitoring' )
 console.log( '-------------------------' )
 console.log( 'databaseid : ',databaseid )
 console.log( 'Formids : ',Formids )
@@ -88,7 +90,7 @@ console.log( 'navmenuHeadings : ',navmenuHeadings )
 console.log( 'databaseMenu : ',databaseMenu )
 console.log( 'temp : ',temp )
 console.log( '-------------------------' )
-console.log( 'admin loading' )
+console.log( 'Template Loading : plugins/entanglement/views/Monitoring' )
 
 
 
@@ -98,7 +100,7 @@ console.log( 'admin loading' )
 ///////////////////////////////// 
 function jstreeGet(ids){
   jQuery.ajax({
-    'url': '/jstree?ids='+ids,
+    'url': '/entanglement/jstree?ids='+ids,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -282,15 +284,7 @@ $('#newMenuItem').click(function(){
 })
 
 
-console.log('Admin Page')
-console.log('---------------------------')
-console.log(' databaseid :', databaseid )
-console.log(' Formids :', Formids )
-console.log(' navmenuHeadings :', navmenuHeadings )
-console.log(' databaseMenu :', databaseMenu )
-console.log(' temp :', temp )
-console.log('---------------------------')
-console.log('Admin Page')
+ 
 
 //Expand and Collapse all buttons.
 var html = '<p></p><div style="text-align:center;position:absolute;top:75px;right:15px"><button id="expandBtn" class="btn btn-default btn-xs"><i class="fa fa-plus-square-o" aria-hidden="true"></i></button><button id="collapseBtn" class="btn btn-default btn-xs"><i class="fa fa-minus-square-o" aria-hidden="true"></i></button></div>'
@@ -317,7 +311,7 @@ if(ids){
   jQuery.ajax({
    'async': true,
    'global': false,
-   'url': '/templateload?ids='+ids,
+   'url': '/entanglement/templateload?ids='+ids,
    'success': function (dataSchemaObject) {
      jQuery('#panel').html("")
      jQuery('#panel').html(dataSchemaObject)

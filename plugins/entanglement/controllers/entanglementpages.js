@@ -48,17 +48,17 @@ exports.brief = function(req, res) {
 exports.monitoring = function(req, res) {
   heavyliftingModel.find().limit(5).exec(function (err, init) {
     if (err) { return next(err); }
-    var ids = '58d2010b118e812d18654119'
+    var ids = '58ddf0747d12ca2fc4ef88cb'
     var Formids = init[3]._id
     res.render('../../../plugins/entanglement/views/monitoring', {
       pagetitle: 'Monitoring | '+sitename ,
-      title: 'Database | ',
       items : JSON.stringify(ids),
       Formids : JSON.stringify(Formids)
     });
   });
 }; 
 
+ 
 
 //////////////////////////////////////////
 ///////////   READ  GROUPS  /////////////
