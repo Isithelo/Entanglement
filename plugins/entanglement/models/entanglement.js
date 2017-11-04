@@ -28,7 +28,7 @@ var entanglement = mongoose.Schema({
 }, { collection: 'entanglement' });
 
 
-module.exports = entanglement = mongoose.model('entanglement', wrasse);
+module.exports = entanglement = mongoose.model('entanglement', entanglement);
 
  
 

@@ -1,4 +1,4 @@
-var wrasseModel      = require('../../../plugins/entanglement/models/entanglement.js');
+var entanglementModel      = require('../../../plugins/wrasse/models/wrasse.js');
 var ObjectId = require('mongodb').ObjectID;
 
 ///////////////////////////////////////////////
@@ -18,7 +18,7 @@ function debugging(req,query){
   if (query) {
     console.log()
     console.log('----------  DEBUGGING  ----------')
-    console.log('File Name : plugins/entanglement/controller/create')
+    console.log('File Name : plugins/wrasse/controller/create')
     console.log('Directory Name : '+__dirname)
     console.log('Original req URL : '+req.originalUrl)
     console.log('----------  DEBUGGING  ----------')
@@ -76,7 +76,7 @@ if (req.user) {
     console.log('user id is working')
     if (dataset.elementID !='') {
       console.log('step 1 - dataset.elementID : ',dataset.elementID)
-      wrasseModel.update(
+      entanglementModel.update(
       {
         $and : 
         [
@@ -96,7 +96,7 @@ if (req.user) {
       res.send(err);
     } else{
     }
-    var create = new wrasseModel(dataset);  
+    var create = new entanglementModel(dataset);  
     create.save(function (err, doc) {  
 //CROPTI IMAGE SAVING
 if ( dataset.entry.image) {
@@ -121,7 +121,7 @@ if (err) {
   })
       } else {
         console.log('new items are here')
-        var create = new wrasseModel(dataset);  
+        var create = new entanglementModel(dataset);  
         create.save(function (err, doc) {  
 //CROPTI IMAGE SAVING
 if ( dataset.entry.image) {

@@ -122,6 +122,7 @@ var app = express.Router();
 var directory = '../../../plugins/entanglement/'
 
 // Controllers
+var createController = require(directory+'controllers/create'); 
 var readController = require(directory+'controllers/read');
 
 ///////////////////////////   THESE ROUTES CAN BE REMOVED FOR CUSTOM SITES   ///////////////////////////
@@ -132,11 +133,14 @@ var entanglementController = require(directory+'controllers/entanglementpages');
 /////////////////////////////////
 
 app.get('/brief', entanglementController.brief);
- 
+app.get('/monitoring', entanglementController.monitoring); 
 ///////////////////////////   THESE ROUTES CAN BE REMOVED FOR CUSTOM SITES   ///////////////////////////
   
-app.get('/monitoring', entanglementController.monitoring);
-app.get('/entanglement/groups', entanglementController.groups);//get the select groups
+/////////////////////////////////////////
+////       CREATE CONTROLLERS       //// 
+///////////////////////////////////////
+app.post('/entanglement/createform', createController.create);
+ 
 
 
 /////////////////////////////////////////

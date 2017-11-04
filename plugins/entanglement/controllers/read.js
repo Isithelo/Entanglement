@@ -1,5 +1,5 @@
 var formsModel      = require('../../../plugins/semini/models/forms.js');
-var wrasseModel      = require('../../../plugins/wrasse/models/wrasse.js');
+var entanglementModel      = require('../../../plugins/entanglement/models/entanglement.js');
 var heavyliftingModel      = require('../../../plugins/heavylifting/models/heavylifting.js');
 var ObjectId = require('mongodb').ObjectID;
 var directory = '../../../plugins/entanglement/views/'
@@ -247,6 +247,9 @@ res.send({
 })
 }
 
+
+
+
 //////////////////////////////////////////////
 ////       GET AND SEND JSTREE DATA      //// 
 ////////////////////////////////////////////
@@ -254,7 +257,7 @@ exports.jstree = function(req, res) {
   //Debugging  
   debugging(req,debugMode)
   var ids = req.query.ids
-  var query = heavyliftingModel.find(
+  var query = formsModel.find(
   {
     $and : 
     [
@@ -267,7 +270,7 @@ exports.jstree = function(req, res) {
       }
       ]
     })
-  var query1 = heavyliftingModel.find(
+  var query1 = formsModel.find(
   {
     "active": "true" ,
     "parentid": ids,      
@@ -295,7 +298,6 @@ exports.jstree = function(req, res) {
 exports.templateload = function(req, res) {
   //Debugging  
   debugging(req,debugMode)
- 
 
 //Which id data to use.
 var ids = req.param('ids')
@@ -311,7 +313,7 @@ var childitem=''
 //  1.RETURN CURRENT ITEM  //
 ////////////////////////////
 //Query to find the menu item selected.
-var query = heavyliftingModel.findOne(
+var query = formsModel.findOne(
 {
   $and : 
   [
@@ -327,6 +329,11 @@ var query = heavyliftingModel.findOne(
 
 query.exec(function (err, query_return) {
  if(err){console.log('Error Here'); return;}
+ 
+ if (!query_return) {
+   console.log('No item found for query');; 
+ }
+
  if (query_return.childType) {
    childitem=query_return.childType 
  } else {
@@ -335,7 +342,7 @@ query.exec(function (err, query_return) {
 ///////////////////////////
 // 2.RETURN CHILD ITEM  //
 /////////////////////////
-var query1 = heavyliftingModel.find(
+var query1 = formsModel.find(
 {
   $and : 
   [
@@ -351,7 +358,7 @@ var query1 = heavyliftingModel.find(
 ////////////////////////////////////////////////////////////////////
 // 3.RETURN THE ASSOCIATED FORM ELMENTS OF THE ABOVE CHILD ITEM  //
 //////////////////////////////////////////////////////////////////
-var query2 = heavyliftingModel.find(
+var query2 = formsModel.find(
 {
   $and : 
   [
@@ -366,7 +373,7 @@ var query2 = heavyliftingModel.find(
 ///////////////////////////////////////
 //  4.ENTRIES CREATED BY THIS FORM  //
 /////////////////////////////////////
-var query3 = heavyliftingModel.find(
+var query3 = formsModel.find(
 {
   $and : 
   [
@@ -381,7 +388,7 @@ var query3 = heavyliftingModel.find(
 ///////////////////////////////////////
 //  5.LEGACY ITEM FOR PRIMER FORMS  //
 /////////////////////////////////////
-var query4 = heavyliftingModel.find(
+var query4 = formsModel.find(
 {
   'entry.parent' : childitem,
   'active' : 'true'
@@ -389,7 +396,7 @@ var query4 = heavyliftingModel.find(
 ///////////////////////////////
 //  6.THE TEMPLATE TO LOAD  //
 //////////////////////////////
-var query5 = heavyliftingModel.findOne(
+var query5 = formsModel.findOne(
 {
   $and : 
   [
@@ -486,7 +493,6 @@ query1.exec(function (err, query1_return) {
   } else {
     template = 'formtable' 
   }
-
   res.render(directory+template, {
     query  :  JSON.stringify(query_return),
     query1 :  JSON.stringify(query1_return),
@@ -703,7 +709,7 @@ var query1 = formsModel.find(
 } else {
 
   //Find the data to be viewed on the form.
-var query1 = wrasseModel.find(
+var query1 = entanglementModel.find(
 {
   $and : 
   [

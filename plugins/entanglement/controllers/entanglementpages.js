@@ -46,16 +46,22 @@ exports.brief = function(req, res) {
 /////  DATABASE    ///// 
 ///////////////////////
 exports.monitoring = function(req, res) {
-  heavyliftingModel.find().limit(5).exec(function (err, init) {
-    if (err) { return next(err); }
-    var ids = '58ddf0747d12ca2fc4ef88cb'
-    var Formids = init[3]._id
-    res.render('../../../plugins/entanglement/views/monitoring', {
-      pagetitle: 'Monitoring | '+sitename ,
+
+
+
+  //Determine how many forms exist on the server.
+  var query1 = formsModel.find().limit(12)
+  query1.exec(function (err, results) {
+    if(err){console.log('Error Here'); return;}
+      var ids = '59fd5eca077e477b30dd0967'
+      var Formids = results[3]._id
+      res.render('../../../plugins/entanglement/views/monitoring', {
+      pagetitle: 'Forms | '+sitename ,
       items : JSON.stringify(ids),
       Formids : JSON.stringify(Formids)
     });
-  });
+})
+
 }; 
 
  

@@ -1,38 +1,41 @@
 <div class="row">
-  <div class="col-md-10">
+  <div class="col-md-11">
     <h1>Monitoring</h1>
-    <p>A compilation of tools for processing and viewing CSV SCADA data.</p>
-
-
-  </div>
-
-
+    <p>SCADA CSV Processing and Data viewing.</p>
+  </div> 
   {{#if user}}
-  <div class="col-md-2" style="text-align: right">
-  <div class="btn-group" role="group" aria-label="...">
-<!-- Split button -->
- 
-  <button type="button" class="btn btn-default  btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-right">
-    <li><a  href="" data-toggle="modal" data-target="#myModal" onclick="addIssue('59e837ba9399ad427c493d4f','59ea2a21f7d5bc22d8dafa0b')" title="Add items"><i class="fa fa-plus" aria-hidden="true"></i>  Add a new issue.</a></li>
-    <li><a href="/issues/#59f4ad70b06ad944ac043794_anchor"><i class="fa fa-list" aria-hidden="true"></i>  View associated issues.</a></li>
-  </ul>
- 
-<script type="text/javascript">
-  ////////////////////////////////////////////////////
+  <div class="col-md-1" style="text-align: right">
+    <div class="btn-group">
+      <button type="button" class="btn btn-default btn-xs dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-cogs" aria-hidden="true"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right">
+       <li><a href="#" data-toggle="modal" data-target="#myModal" onclick="newMenuItem()" title="Add items"><i class="fa fa-plus" aria-hidden="true"></i>  Add Item</a></li>
+       <li> <a href="#" data-toggle="modal" data-target="#myModal" onclick="editRaw()" title="Edit this item raw"><i class="fa fa-file-code-o" aria-hidden="true"></i>  Edit Raw</a></li>
+     </ul>
+   </div>
+   <div class="btn-group" role="group" aria-label="...">
+    <!-- Split button -->
+    <button type="button" class="btn btn-default  btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li><a  href="" data-toggle="modal" data-target="#myModal" onclick="addIssue('59e837ba9399ad427c493d4f','59ea2a21f7d5bc22d8dafa0b')" title="Add items"><i class="fa fa-plus" aria-hidden="true"></i>  Add a new issue.</a></li>
+      <li><a href="/issues/#59ea2a21f7d5bc22d8dafa0b_anchor"><i class="fa fa-list" aria-hidden="true"></i>  View associated issues.</a></li>
+    </ul>
+    <script type="text/javascript">
+////////////////////////////////////////////////////
 ////////    BUTTON CLICK ADD NEW DB ITEM  /////////
 //////////////////////////////////////////////////
 function addIssue(form,grouping){
-  loadformModalwrasse(form,'','component',grouping,'','')
+  loadformModalEntanglement(form,'','component',grouping,'','')
 }
 //////////////////////////////////////
 ////////    GET FORM BY ID  /////////
 //////////////////////////////////                                                                                                              
-function loadformModalwrasse(formdata,idItem,raw,parentid,headings,entry){
-  console.log( 'Button click : plugins/wrasse/views/issues' )
+function loadformModalEntanglement(formdata,idItem,raw,parentid,headings,entry){
+  console.log( 'Button click : plugins/Entanglement/views/monitoring' )
   var headings = JSON.stringify(headings)
   var entry = JSON.stringify(entry)
   jQuery.ajax({
@@ -46,43 +49,44 @@ function loadformModalwrasse(formdata,idItem,raw,parentid,headings,entry){
 }
 </script>
 </div>
-  </div>  
+</div>  
 {{/if}}
-
-</div>   <hr>
-<div class="row">
-<div class="col-md-4" id="navMenuPanel" style="min-height: 450px">       
+</div>  
+<hr>
+<div class="row" id="page">
+  <div class="col-md-4" id="navMenuPanel" style="min-height: 450px">
     <div id="myProgress">
-      <div id="myBar">
-      </div>
+      <div id="myBar"> </div>
     </div>
-    <h5><strong>Navigation</strong> <small>Use the navigation tree to interact with the database.</small></h5>
+    <h5><strong>Navigation</strong> <small>  Use the navigation tree to interact with the database.</small></h5>
     <div class=" ">
      <div style="padding-bottom:15px;padding-bottom:15px">
       <input id="search_field" name="searchinput" type="search" placeholder="Search Navigation" class="form-control input-md">      
     </div>
-    <div id="jstree"><pre><i class="fa fa-spinner fa-spin fa-fw"></i><span class=" ">Loading...</span></pre></div> 
+    <div id="jstree"></div> 
   </div>
-  <div id="menuItems"></div>
+  <div class="btn-group" role="group" aria-label="..." style="padding-bottom: 15px">
+  </div>
 </div>  
 <div class="col-md-8" id="browserArea">
   <div id="panel">  
-<div class="awesome"><div style="background-color: #fff !important;padding: 5px"><div style="padding:25px"><h3>Heads up! <small>Click on the nodes of the navigation tree to interact with the site.</small></h3><div style="text-align: center"><p>To get started view the <a href="/documentation">Documentation section</a> on this site or sign in / sign up.</p></div> </div></div></div>
+    <div class="awesome"><div style="background-color: #fff !important;padding: 5px"><div style="padding:25px"><h3>Heads up! <small>Click on the nodes of the navigation tree to interact with the site.</small></h3><div style="text-align: center"><p>To get started view the <a href="/documentation">Documentation section</a> on this site or sign in / sign up.</p></div> </div></div></div>
   </div>
 </div>
 </div>
 
 <script type="text/javascript">
+
   var databaseid = {{{items}}};
   var Formids = {{{Formids}}};
-  var navmenuHeadings = ['detail','description','icon','buttons','tabs','parent','template']
+  var navmenuHeadings = ['detail','description','icon','buttons','tabs','parent','template','value']
   var databaseMenu = []
   var temp =[]
 
 /////////////////////////////
 ////     DEBUG AREA     //// 
 ///////////////////////////
-console.log( 'Template Loading : plugins/entanglement/views/Monitoring' )
+console.log( 'Template Loading : plugins/Entanglement/views/monitoring' )
 console.log( '-------------------------' )
 console.log( 'databaseid : ',databaseid )
 console.log( 'Formids : ',Formids )
@@ -90,10 +94,7 @@ console.log( 'navmenuHeadings : ',navmenuHeadings )
 console.log( 'databaseMenu : ',databaseMenu )
 console.log( 'temp : ',temp )
 console.log( '-------------------------' )
-console.log( 'Template Loading : plugins/entanglement/views/Monitoring' )
-
-
-
+console.log( 'Template Loading : plugins/Entanglement/views/monitoring' )
 
 /////////////////////////////////// 
 //////  GET JSTREE BY ID    //////
@@ -104,24 +105,20 @@ function jstreeGet(ids){
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
-      var dataSchemaObject = JSON.parse(dataSchemaObject)
+     var dataSchemaObject = JSON.parse(dataSchemaObject)
 
-      
       //Add the headings to the page.
-      $('#descriptions').html(dataSchemaObject.thisitem[0].name)
-      $('#details').html(dataSchemaObject.thisitem[0].detail)
-
+ 
       $('#panel').html('<div class="awesome"><div style="background-color: #fff !important;padding: 5px"><div style="padding:25px"><h3>Heads up! <small>Click on the nodes of the navigation tree to interact with the site.</small></h3><div style="text-align: center"><p>To get started view the <a href="/documentation">Documentation section</a> on this site or sign in / sign up.</p></div> </div></div></div>')
-
       var dataSchemaObject1 = fitstFormat(dataSchemaObject.children)
       //manipulate data to work with the jstree
       var jsTreeData = dataJStreeConvert (dataSchemaObject1)
-      var location = 'jstree'
-      $('#'+location).html('')
+      var locations = 'jstree'
+      $('#'+locations).html('')
       //load the jstree
       //change the primary page id variable , used for the parent
       databaseid = ids
-      loadNavMenu(location,jsTreeData)
+      loadNavMenu(locations,jsTreeData)
     }
   });
 }
@@ -141,7 +138,7 @@ function fitstFormat(databaseMenu){
     databaseMenu = temp
     return databaseMenu
   }
-
+  
 ///////////////////////////// 
 //////  INITIALISE    //////
 /////////////////////////// 
@@ -219,13 +216,13 @@ function sortResults(json , prop, asc) {
 ////////////////////////////////////////////////
 ////////    LOAD NAV TREE INTO MEMORY   ///////
 //////////////////////////////////////////////
-function loadNavMenu(location,dataNav){
+function loadNavMenu(locations,dataNav){
   //console.log(dataNav)
   //Destory the tree if it exists
-  if (jQuery('#'+location).jstree("destroy")) {
-    jQuery('#'+location).jstree("destroy");
+  if (jQuery('#'+locations).jstree("destroy")) {
+    jQuery('#'+locations).jstree("destroy");
   }
-  var $root =jQuery('#'+location).jstree({ 
+  var $root =jQuery('#'+locations).jstree({ 
     'core' : {
       'data' : dataNav,        
       'themes': {
@@ -238,7 +235,10 @@ function loadNavMenu(location,dataNav){
       "keep_selected_style" : false
     },
     "multiple": false,
-    "plugins" : [  "search" , "state"]
+    "plugins" : [   "search" , "state"]
+  }).on('ready.jstree', function(e, data) {
+    $('#jstree').jstree(true).deselect_all();
+    $('#jstree').jstree(true).select_node(location.hash.slice(1)); 
   });
 
 /////////////////////////////////
@@ -249,14 +249,14 @@ jQuery('#search_field').keyup(function () {
   if(to) { clearTimeout(to); }
   to = setTimeout(function () {
     var v = jQuery('#search_field').val();
-    jQuery('#'+location).jstree(true).search(v);
+    jQuery('#'+locations).jstree(true).search(v);
   }, 250);
 });
 
 //////////////////////////////////////////////////
 ////////  EVENT LISTNER ON THE TREE VIEW  ///////
 ////////////////////////////////////////////////
-jQuery('#'+location)
+jQuery('#'+locations)
     // listen for event
     .on('changed.jstree', function (e, dataTree) {
       var i, j, r = []
@@ -273,34 +273,16 @@ jQuery('#'+location)
         templateloading(ids)
       }
     })
-
-//////////////////////////////////////////////
-////////    BUTTON CLICK OPEN FORM  /////////
-////////////////////////////////////////////
-$('#newMenuItem').click(function(){
-  //var temp = jQuery('#'+location).jstree("get_selected",true)
-  //console.log(temp[0].id)
-  newMenuItems(Formids,'','use',databaseid,'',navmenuHeadings)
-})
-
-
- 
-
-//Expand and Collapse all buttons.
-var html = '<p></p><div style="text-align:center;position:absolute;top:75px;right:15px"><button id="expandBtn" class="btn btn-default btn-xs"><i class="fa fa-plus-square-o" aria-hidden="true"></i></button><button id="collapseBtn" class="btn btn-default btn-xs"><i class="fa fa-minus-square-o" aria-hidden="true"></i></button></div>'
-$('#menuItems').append(html)
-
-
-
-jQuery('#expandBtn').click(function () {
- jQuery('#'+location).jstree('open_all');
-});
-jQuery('#collapseBtn').click(function () {
- jQuery('#'+location).jstree('close_all');
-});
-//Expand and Collapse all buttons.
-
-}
+    console.log( 'Template Loading : plugins/Entanglement/views/issues' )
+    console.log('---------------------------')
+    console.log(' databaseid :', databaseid )
+    console.log(' Formids :', Formids )
+    console.log(' navmenuHeadings :', navmenuHeadings )
+    console.log(' databaseMenu :', databaseMenu )
+    console.log(' temp :', temp )
+    console.log('---------------------------')
+    console.log( 'Template Loading : plugins/Entanglement/views/issues' )
+  }
 
 ///////////////////////////////////////////////////////
 ////////  EVENT LISTNER FUNCTION AREA DATABASE ///////
@@ -349,10 +331,9 @@ function collapse() {
 ////////    GET FORM BY ID  /////////
 ////////////////////////////////////
 function newMenuItems(formdata,idItem,raw,parentid,injectParentid,headings){
-  console.log(formdata,idItem,raw,parentid,injectParentid,headings)
   var headings = JSON.stringify(headings)
   jQuery.ajax({
-    'url': '/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings,
+    'url': '/forms/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -360,5 +341,20 @@ function newMenuItems(formdata,idItem,raw,parentid,injectParentid,headings){
     }
   });
 }
+
+////////////////////////////////////////////////////
+////////    BUTTON CLICK ADD NEW DB ITEM  /////////
+//////////////////////////////////////////////////
+function newMenuItem(parentid){
+  newMenuItems(Formids,'','use',databaseid,'',navmenuHeadings)
+}
+
+///////////////////////////////////////////////////
+////////    BUTTON CLICK EDIT RAW DB ITEM  ///////
+//////////////////////////////////////////////////
+function editRaw(parentid){
+  newMenuItems(Formids,databaseid,'raw',databaseid,'',navmenuHeadings)
+}
+
 </script>
 

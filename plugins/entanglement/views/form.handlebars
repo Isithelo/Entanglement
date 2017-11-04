@@ -38,7 +38,10 @@
   var raw = {{{raw}}}
   var parentid = {{{parentid}}}
   var formid1 = create_uid()
+ 
   var parentItem = {{{parentItem}}}
+ 
+
   var htmlcompile  ={}
   var lat 
   var long
@@ -65,7 +68,7 @@
 ////////////////////////////////////
 ////        DEBUG AREA         //// 
 //////////////////////////////////
-console.log( 'Tempalte Name : plugins/heavylifting/views/form' )
+console.log( 'Tempalte Name : plugins/entanglement/views/form' )
 console.log( '-------------------------' )
 console.log( 'formdata :',formdata )
 console.log( 'idItem :',idItem )
@@ -81,7 +84,7 @@ console.log( 'entry :',entry )
 var entry
 {{/if}}
 console.log( '-------------------------' )
-console.log( 'Tempalte Name : plugins/heavylifting/views/form' )
+console.log( 'Tempalte Name : plugins/entanglement/views/form' )
 ////////////////////////////////////
 ////        DEBUG AREA         //// 
 //////////////////////////////////
@@ -121,7 +124,7 @@ $(document).ready(function(){
 ///////////////////////////////////////////////////////
 function getdatacomp(formdata,idItem,raw){
   jQuery.ajax({
-    'url': '/getdatacomp?formdata='+formdata+'&idItem='+idItem+'&raw='+raw,
+    'url': '/issues/getdatacomp?formdata='+formdata+'&idItem='+idItem+'&raw='+raw,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -138,7 +141,7 @@ function getdatacomp(formdata,idItem,raw){
 ///////////////////////////////////////
 function getdata(formdata,idItem,raw){
   jQuery.ajax({
-    'url': '/getdata?formdata='+formdata+'&idItem='+idItem+'&raw='+raw,
+    'url': '/issues/getdata?formdata='+formdata+'&idItem='+idItem+'&raw='+raw,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -512,7 +515,7 @@ if (!temp == undefined) {
     jQuery.ajax({
       'async': true,
       'global': false,
-      'url': '/getformfield?data='+temp ,
+      'url': '/issues/getformfield?data='+temp ,
       'success': function (dataSchemaObject) {
         if (dataSchemaObject) {
           var dataSchemaObject = JSON.parse(dataSchemaObject);
@@ -820,7 +823,7 @@ switch(true){
 
 //Jquery send to server
 jQuery.ajax({
-  'url': '/create',
+  'url': '/issues/createform',
   'type': 'POST', 
   'dataType': 'json',
   'contentType': 'application/json', 
