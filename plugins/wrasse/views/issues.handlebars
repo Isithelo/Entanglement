@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-11">
     <h1>Issues</h1>
     <p>Use the interface below to modify all site issues and logging.</p>
   </div> 
@@ -7,49 +7,42 @@
 
 
   {{#if user}}
-
-
-
-  <div class="col-md-6" style="text-align: right">
-  <div class="btn-group" role="group" aria-label="...">
-    <a  class="btn btn-default btn-xs"  data-toggle="modal" data-target="#myModal" onclick="newMenuItem()" title="Add items"><i class="fa fa-plus" aria-hidden="true"></i></a>
-    <a  class="btn btn-default btn-xs"  data-toggle="modal" data-target="#myModal" onclick="editRaw()" title="Edit this item raw"><i class="fa fa-file-code-o" aria-hidden="true"></i></a>
-</div>
-    
-  </div>  
-
-
-
-
-  <div class="col-md-6" style="text-align: right">
-  <div class="btn-group" role="group" aria-label="...">
-<!-- Split button -->
- 
-  <button type="button" class="btn btn-default  btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-    <span class="sr-only">Toggle Dropdown</span>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-right">
-    <li><a  href="" data-toggle="modal" data-target="#myModal" onclick="addIssue('59e837ba9399ad427c493d4f','59ea2a21f7d5bc22d8dafa0b')" title="Add items"><i class="fa fa-plus" aria-hidden="true"></i>  Add a new issue.</a></li>
-    <li><a href="/issues/#59ea2a21f7d5bc22d8dafa0b_anchor"><i class="fa fa-list" aria-hidden="true"></i>  View associated issues.</a></li>
-  </ul>
- 
-<script type="text/javascript">
-  ////////////////////////////////////////////////////
+  <div class="col-md-1" style="text-align: right">
+    <div class="btn-group">
+      <button type="button" class="btn btn-default btn-xs dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-cogs" aria-hidden="true"></i>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-right">
+       <li><a href="#" data-toggle="modal" data-target="#myModal" onclick="newMenuItem()" title="Add items"><i class="fa fa-plus" aria-hidden="true"></i>  Add Item</a></li>
+       <li> <a href="#" data-toggle="modal" data-target="#myModal" onclick="editRaw()" title="Edit this item raw"><i class="fa fa-file-code-o" aria-hidden="true"></i>  Edit Raw</a></li>
+     </ul>
+   </div>
+   <div class="btn-group" role="group" aria-label="...">
+    <!-- Split button -->
+    <button type="button" class="btn btn-default  btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right">
+      <li><a  href="" data-toggle="modal" data-target="#myModal" onclick="addIssue('59e837ba9399ad427c493d4f','59ea2a21f7d5bc22d8dafa0b')" title="Add items"><i class="fa fa-plus" aria-hidden="true"></i>  Add a new issue.</a></li>
+      <li><a href="/issues/#59ea2a21f7d5bc22d8dafa0b_anchor"><i class="fa fa-list" aria-hidden="true"></i>  View associated issues.</a></li>
+    </ul>
+    <script type="text/javascript">
+////////////////////////////////////////////////////
 ////////    BUTTON CLICK ADD NEW DB ITEM  /////////
 //////////////////////////////////////////////////
 function addIssue(form,grouping){
-  loadformModalwrasse(form,'','component',grouping,'','')
+  loadformModalEntanglement(form,'','component',grouping,'','')
 }
 //////////////////////////////////////
 ////////    GET FORM BY ID  /////////
 //////////////////////////////////                                                                                                              
-function loadformModalwrasse(formdata,idItem,raw,parentid,headings,entry){
-  console.log( 'Button click : plugins/wrasse/views/issues' )
+function loadformModalEntanglement(formdata,idItem,raw,parentid,headings,entry){
+  console.log( 'Button click : plugins/Entanglement/views/monitoring' )
   var headings = JSON.stringify(headings)
   var entry = JSON.stringify(entry)
   jQuery.ajax({
-    'url': '/issues/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings+'&entry='+entry,
+    'url': '/entanglement/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings+'&entry='+entry,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -59,7 +52,7 @@ function loadformModalwrasse(formdata,idItem,raw,parentid,headings,entry){
 }
 </script>
 </div>
-  </div>  
+</div>  
 {{/if}}
 
 

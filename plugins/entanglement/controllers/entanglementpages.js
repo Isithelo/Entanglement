@@ -56,7 +56,7 @@ exports.monitoring = function(req, res) {
       var ids = '59fd5eca077e477b30dd0967'
       var Formids = results[3]._id
       res.render('../../../plugins/entanglement/views/monitoring', {
-      pagetitle: 'Forms | '+sitename ,
+      pagetitle: 'Monitoring | '+sitename ,
       items : JSON.stringify(ids),
       Formids : JSON.stringify(Formids)
     });

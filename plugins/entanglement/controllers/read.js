@@ -1,6 +1,5 @@
 var formsModel      = require('../../../plugins/semini/models/forms.js');
 var entanglementModel      = require('../../../plugins/entanglement/models/entanglement.js');
-var heavyliftingModel      = require('../../../plugins/heavylifting/models/heavylifting.js');
 var ObjectId = require('mongodb').ObjectID;
 var directory = '../../../plugins/entanglement/views/'
 
@@ -247,9 +246,6 @@ res.send({
 })
 }
 
-
-
-
 //////////////////////////////////////////////
 ////       GET AND SEND JSTREE DATA      //// 
 ////////////////////////////////////////////
@@ -298,6 +294,7 @@ exports.jstree = function(req, res) {
 exports.templateload = function(req, res) {
   //Debugging  
   debugging(req,debugMode)
+ 
 
 //Which id data to use.
 var ids = req.param('ids')
@@ -329,11 +326,6 @@ var query = formsModel.findOne(
 
 query.exec(function (err, query_return) {
  if(err){console.log('Error Here'); return;}
- 
- if (!query_return) {
-   console.log('No item found for query');; 
- }
-
  if (query_return.childType) {
    childitem=query_return.childType 
  } else {
@@ -373,7 +365,7 @@ var query2 = formsModel.find(
 ///////////////////////////////////////
 //  4.ENTRIES CREATED BY THIS FORM  //
 /////////////////////////////////////
-var query3 = formsModel.find(
+var query3 = entanglementModel.find(
 {
   $and : 
   [
@@ -493,6 +485,7 @@ query1.exec(function (err, query1_return) {
   } else {
     template = 'formtable' 
   }
+
   res.render(directory+template, {
     query  :  JSON.stringify(query_return),
     query1 :  JSON.stringify(query1_return),

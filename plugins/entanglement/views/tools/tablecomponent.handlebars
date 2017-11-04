@@ -490,7 +490,7 @@ function permdelete(id){
 ///////////////////////////
 function deleteEntrys(_id){
   jQuery.ajax({
-    'url': '/deleteentry?idItem='+_id,
+    'url': '/entanglement/deleteentry?idItem='+_id,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -504,7 +504,7 @@ function deleteEntrys(_id){
 ///////////////////////////
 function deleteEntrysPerm(_id){
   jQuery.ajax({
-    'url': '/deleteentryperm?idItem='+_id,
+    'url': '/entanglement/deleteentryperm?idItem='+_id,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -531,7 +531,7 @@ function deployFormComponent(formToUse){
   //This is hard wired , and likely to cause issues.
   var headings = ["description","detail","icon","headings"]
   var entry =''
-  loadformModalwrasse(formToUse,'','component',items.elementID,headings,entry)
+  loadformEntanglement(formToUse,'','component',items.elementID,headings,entry)
 }
 
 //////////////////////////////////////////////
@@ -541,7 +541,7 @@ function deployFormUse(formToUse){
   //This is hard wired , and likely to cause issues.
   var headings = ["description","detail","icon","headings"]
   var entry =''
-  loadformModalwrasse(formToUse,'','use',templateload,headings,entry)
+  loadformEntanglement(formToUse,'','use',templateload,headings,entry)
 }
 
 //////////////////////////
@@ -552,7 +552,7 @@ function modifyItemComp(id){
   childType = $('#'+id+'').data('childtype')
   //Used for the check self when modifiing.
   if (!childType) {
-    loadformModalwrasse(id,id,'self',id)
+    loadformEntanglement(id,id,'self',id)
   } else {
   //INSTRUCTIONS
   ////////////////////////////////////////////////////////////////////
@@ -585,7 +585,7 @@ function modifyItemComp(id){
     } 
     console.log('Tracing here',childType,id,'componentedit',parentIdTemp,headings, entry)
   //The id of the emement needs to be injected into the form , as it does not have that data.
-  loadformModalwrasse(childType,id,'componentedit',parentIdTemp,headings, entry)
+  loadformEntanglement(childType,id,'componentedit',parentIdTemp,headings, entry)
 }
 }
 
@@ -597,7 +597,7 @@ function copthisitem(id){
   childType = $('#'+id+'').data('childtype')
   //Used for the check self when modifiing.
   if (!childType) {
-    loadformModalwrasse(id,id,'self',id)
+    loadformEntanglement(id,id,'self',id)
   } else {
   //INSTRUCTIONS
   ////////////////////////////////////////////////////////////////////
@@ -629,7 +629,7 @@ function copthisitem(id){
       elementID : id
     } 
   //The id of the emement needs to be injected into the form , as it does not have that data.
-  loadformModalwrasse(childType,id,'componentcopy',parentIdTemp,headings, entry)
+  loadformEntanglement(childType,id,'componentcopy',parentIdTemp,headings, entry)
 }
 }
 
@@ -638,7 +638,7 @@ function copthisitem(id){
 ////////////////////////////////////////////////
 function deployparentrawForm(parentid){
   parentid = parentid.replace('_parentraw', '');
-  loadformModalwrasse(parentid,parentid,'raw',parentid)
+  loadformModal(parentid,parentid,'raw',parentid)
 }
 
 //////////////////////////////////////////////////
@@ -646,17 +646,17 @@ function deployparentrawForm(parentid){
 ////////////////////////////////////////////////
 function copyParentRaw(parentid){
   parentid = parentid.replace('_copy', '');
-  loadformModalwrasse(parentid,parentid,'copyraw',parentid)
+  loadformEntanglement(parentid,parentid,'copyraw',parentid)
 }
 
 //////////////////////////////////////
 ////////    GET FORM BY ID  /////////
 ////////////////////////////////////                                                                                                              
-function loadformModalwrasse(formdata,idItem,raw,parentid,headings,entry){
+function loadformEntanglement(formdata,idItem,raw,parentid,headings,entry){
   var headings = JSON.stringify(headings)
   var entry = JSON.stringify(entry)
   jQuery.ajax({
-    'url': '/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings+'&entry='+entry,
+    'url': '/entanglement/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings+'&entry='+entry,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -670,7 +670,7 @@ function loadformModalwrasse(formdata,idItem,raw,parentid,headings,entry){
 ////////////////////////
 function useForm(id){
   id = id.replace('_use', '');
-  loadformModalwrasse(id,'','use',id)
+  loadformEntanglement(id,'','use',id)
 }
 
 //////////////////////////
@@ -681,9 +681,9 @@ function modifyItem(id){
   childType = $('#'+id+'').data('childtype')
   //Used for the check self when modifiing.
   if (!childType) {
-    loadformModalwrasse(id,id,'self',id)
+    loadformEntanglement(id,id,'self',id)
   } else {
-    loadformModalwrasse(childType,id,'self',id)
+    loadformEntanglement(childType,id,'self',id)
   }
 }
 
@@ -695,9 +695,9 @@ function EditWithraw(id){
   childType = $('#'+id+'').data('childtype')
   //Used for the check self when modifiing.
   if (!childType) {
-    loadformModalwrasse(id,id,'raw',id)
+    loadformModal(id,id,'raw',id)
   } else {
-    loadformModalwrasse(childType,id,'raw',id)
+    loadformModal(childType,id,'raw',id)
   }
 }
 
@@ -710,10 +710,26 @@ function createComp(id){
   //there is some kind of wierd lowcase requiremtns.
   parentid = $('#'+id+'').data('parentid')
   if (!childType) {
-    loadformModalwrasse(childType,'','use',id)
+    loadformEntanglement(childType,'','use',id)
   } else {
-    loadformModalwrasse(parentid,'','use',id)
+    loadformEntanglement(parentid,'','use',id)
   }
 }
 
+
+//////////////////////////////////////
+////////    GET FORM BY ID  /////////
+////////////////////////////////////                                                                                                            
+function loadformModal(formdata,idItem,raw,parentid,headings){
+  console.log('Entering here' , parentid)
+  var headings = JSON.stringify(headings)
+  jQuery.ajax({
+    'url': '/forms/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings,
+    'async': true,
+    'global': false,
+    'success': function (dataSchemaObject) {
+      $('#formAreaModal').html(dataSchemaObject)
+    }
+  });
+}
 </script>

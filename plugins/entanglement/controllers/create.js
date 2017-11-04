@@ -1,4 +1,4 @@
-var entanglementModel      = require('../../../plugins/wrasse/models/wrasse.js');
+var entanglementModel      = require('../../../plugins/entanglement/models/entanglement.js');
 var ObjectId = require('mongodb').ObjectID;
 
 ///////////////////////////////////////////////
@@ -18,7 +18,7 @@ function debugging(req,query){
   if (query) {
     console.log()
     console.log('----------  DEBUGGING  ----------')
-    console.log('File Name : plugins/wrasse/controller/create')
+    console.log('File Name : plugins/entanglement/controller/create')
     console.log('Directory Name : '+__dirname)
     console.log('Original req URL : '+req.originalUrl)
     console.log('----------  DEBUGGING  ----------')

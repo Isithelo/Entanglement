@@ -37,7 +37,7 @@ exports.issues = function(req, res) {
       var ids = results[10]._id
       var Formids = results[3]._id
       res.render('../../../plugins/wrasse/views/issues', {
-      pagetitle: 'Forms | '+sitename ,
+      pagetitle: 'Issues | '+sitename ,
       items : JSON.stringify(ids),
       Formids : JSON.stringify(Formids)
     });

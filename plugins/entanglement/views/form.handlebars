@@ -124,7 +124,7 @@ $(document).ready(function(){
 ///////////////////////////////////////////////////////
 function getdatacomp(formdata,idItem,raw){
   jQuery.ajax({
-    'url': '/issues/getdatacomp?formdata='+formdata+'&idItem='+idItem+'&raw='+raw,
+    'url': '/entanglement/getdatacomp?formdata='+formdata+'&idItem='+idItem+'&raw='+raw,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -141,7 +141,7 @@ function getdatacomp(formdata,idItem,raw){
 ///////////////////////////////////////
 function getdata(formdata,idItem,raw){
   jQuery.ajax({
-    'url': '/issues/getdata?formdata='+formdata+'&idItem='+idItem+'&raw='+raw,
+    'url': '/entanglement/getdata?formdata='+formdata+'&idItem='+idItem+'&raw='+raw,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
@@ -515,7 +515,7 @@ if (!temp == undefined) {
     jQuery.ajax({
       'async': true,
       'global': false,
-      'url': '/issues/getformfield?data='+temp ,
+      'url': '/entanglement/getformfield?data='+temp ,
       'success': function (dataSchemaObject) {
         if (dataSchemaObject) {
           var dataSchemaObject = JSON.parse(dataSchemaObject);
@@ -823,7 +823,7 @@ switch(true){
 
 //Jquery send to server
 jQuery.ajax({
-  'url': '/issues/createform',
+  'url': '/entanglement/createform',
   'type': 'POST', 
   'dataType': 'json',
   'contentType': 'application/json', 
