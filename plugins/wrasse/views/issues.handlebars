@@ -32,17 +32,17 @@
 ////////    BUTTON CLICK ADD NEW DB ITEM  /////////
 //////////////////////////////////////////////////
 function addIssue(form,grouping){
-  loadformModalEntanglement(form,'','component',grouping,'','')
+  loadformWrasse(form,'','component',grouping,'','')
 }
 //////////////////////////////////////
 ////////    GET FORM BY ID  /////////
 //////////////////////////////////                                                                                                              
-function loadformModalEntanglement(formdata,idItem,raw,parentid,headings,entry){
-  console.log( 'Button click : plugins/Entanglement/views/monitoring' )
+function loadformWrasse(formdata,idItem,raw,parentid,headings,entry){
+  console.log( 'Button click : plugins/wrasse/views/monitoring' )
   var headings = JSON.stringify(headings)
   var entry = JSON.stringify(entry)
   jQuery.ajax({
-    'url': '/entanglement/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings+'&entry='+entry,
+    'url': '/wrasse/getform?formdata='+formdata+'&idItem='+idItem+'&raw='+raw+'&parentid='+parentid+'&headings='+headings+'&entry='+entry,
     'async': true,
     'global': false,
     'success': function (dataSchemaObject) {
