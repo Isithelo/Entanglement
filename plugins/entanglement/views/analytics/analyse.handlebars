@@ -7,46 +7,66 @@
 <!--                4. 20160615 : minor modifcation to instructions area about save directory.                   -->
 <!--                5. 20171105 : Added the analyse csv processor to the Entanglement framework.                 -->
 <h1>CSV processing and uploader</h1>
+<p>CSV files are streamed into memory, processed against preset parameters and summarized as a JSON file. This JSON is uploaded into the MongodB server for analysis.</p>
+
+
+        {{#if user}}
+  
+        <style type="text/css">
+          .day .purple-event : {
+            background: antiquewhite;
+          }
+        </style>
+
+
 <div class="row">
-  <div class="col-md-4"  >
-    <div class="alert alert-info" role="alert" style="height:350px;">     
+  <div class="col-md-12"  >
+    <div class="alert alert-info" role="alert" >     
       <h3>Instructions</h3>       
-      <li>All files to process should be in the themes directory (Cross orgin requests)</li>
-      <li>Wait for file directory structure to load.</li>
-      <li>Select the files to process into the JSON.</li>
-      <li>When complete , view the temp.json file in github directory for details.</li>
+      <li>Select the files you would like to process.</li>
+      <li>Once file details are populated, click on the get statistics button to run file processing.</li>
+      <li>When complete browse the data plot folder to view various equipment behaviours.</li>
     </div>
   </div>
-  <div class="col-md-4" >
-<div class="panel panel-default" style="height:350px;">
-  <div class="panel-body">
-      <h3>1. Select Files</h3>
-    <!-- File Button --> 
-    <div class="form-group" style="text-align:center;padding-top:25px">
-      <form action="demo_form.asp">
-        <input type="file" name="img" multiple id="multiSelect">
-      </form>
-    </div></div>
+  <div class="col-md-6" >
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h3>1. Select Files</h3>
+        <p>Find the CSV files on your local drive. These will be loaded into memory for processing. Processing can only be done with files on the server side (Cross-origin browser).</p>
+        <!-- File Button --> 
+        <div class="form-group" style="text-align:center;padding-top:25px">
+          <form action="demo_form.asp">
+            <input type="file" name="img" multiple id="multiSelect">
+          </form>
+        </div></div>
+      </div>
+    </div>
+  <div class="col-md-6">
+   <div style="text-align:center" ><div id="my-calendars"></div></div>
+ </div>
   </div>
 </div>
-    <div class="col-md-4"  >
-<div class="panel panel-default" style="height:350px;">
-  <div class="panel-body">
-       <h3>2. Start Processing</h3>
-      <!-- Button -->
-      <p></p>
-      <div class="form-group">
-        <div style="text-align:center">
+
+<p></p>
+<div class="row">
+  <div class="col-md-12">
+      <div class="panel panel-default"  >
+        <div class="panel-body">
+         <h3>2. Start Processing</h3>
+         <p>Click on the get statistics button to stream CSV files into memory, perform data analytics and upload file summaries onto the server.</p>
+         <!-- Button -->
+         <p></p>
+
+         <div style="text-align:center">
           <button id="singlebutton" name="singlebutton" class="btn btn-lg btn-primary" disabled="disabled">Get Statistics</button>
         </div>
       </div>
-  </div>
-</div>
     </div>
+ </div>
 </div>
-    <div class="row">
-<div class="col-md-6">
-  <h3>Daily Tonnes Moved</h3>
+<div class="row">
+  <div class="col-md-6">
+    <h3>Daily Tonnes Moved</h3>
     <table class="table table-bordered" id="average">
       <thead>
         <tr>
@@ -58,63 +78,58 @@
       <tbody>
       </tbody>
     </table>
-</div>
-
-    <div class="col-md-6">
-      <h3>File Header Loading Area</h3>
-      <div style="overflow:auto">
-        <table  class="table table-bordered" style="font-size:11px;padding:2px 2px 2px 2px;">
-          <tr>
-            <th>DATE</th>
-            <th>LOADED HEADER</th>
-            <th>LOADED STATS</th>
-          </tr>
-          <tbody id="datedetail">
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-</div>
- <div class="row">
-
-
-    <div class="col-md-6">
-      <h3>JSON Extract</h3>
-      <div><pre id="SummaryJSON" style="height:350px"></pre></div>
-    </div>
-
-    <div class="col-md-6" style="overflow:auto;max-height:450px">
-      <h3>Stats Loading</h3>
-      <table class="table table-bordered" style="font-size:11px">
+  </div>
+  <div class="col-md-6">
+    <h3>File Header Loading Area</h3>
+    <div style="overflow:auto">
+      <table  class="table table-bordered" style="font-size:11px;padding:2px 2px 2px 2px;">
         <tr>
           <th>Date</th>
-          <th>Tag</th> 
-          <th>Count</th>
-          <th>Average</th>         
-          <th>Max</th> 
-          <th>Min</th> 
-          <th>Sum (k)</th> 
-          <th>Greater Than</th> 
-          <th>Less Than</th> 
-          <th>Between</th> 
-          <th>Not Between</th> 
+          <th>LOADED HEADER</th>
+          <th>LOADED STATS</th>
         </tr>
-        <tbody id="statSummary">
+        <tbody id="datedetail">
         </tbody>
       </table>
-      <div id="placeholder"></div>
     </div>
   </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h3>JSON Extract</h3>
+    <div><pre id="SummaryJSON" style="height:350px"></pre></div>
+  </div>
+  <div class="col-md-6" style="overflow:auto;max-height:450px">
+    <h3>Stats Loading</h3>
+    <table class="table table-bordered" style="font-size:11px">
+      <tr>
+        <th>Date</th>
+        <th>Tag</th> 
+        <th>Count</th>
+        <th>Average</th>         
+        <th>Max</th> 
+        <th>Min</th> 
+        <th>Sum (k)</th> 
+        <th>Greater Than</th> 
+        <th>Less Than</th> 
+        <th>Between</th> 
+        <th>Not Between</th> 
+      </tr>
+      <tbody id="statSummary">
+      </tbody>
+    </table>
+    <div id="placeholder"></div>
+  </div>
+</div>
 
-  <script>
+<pre id="test"></pre>
 
+<script>
 /////////////////////////////
 ////     DEBUG AREA     //// 
 ///////////////////////////
 console.log( 'Template Loading : plugins/entanglement/views/analytics/analyse' )
 console.log( '----------------------------------------------------------------')
-
 var eventData=([])
 var temp=[];
 var CSVstring = [];
@@ -130,113 +145,123 @@ var fileextension = ".csv";
 //used for above 100 TPH calculation of average.
 var averageCounttph1=0;
 var averageCounttph1=0;
+var calendarData =[]
+ 
 
-
-/////////////////////////////
-///      INITIALIZE      ///
-///////////////////////////
+///////////////////////////// 
+//////  INITIALISE    //////
+/////////////////////////// 
 $('document').ready(function(){
-  getDirectoryCSV();
+ getScada()
 })
 
-
-
-/////////////////////////
-// GET ALL FILE NAMES //
-///////////////////////
-function getDirectoryCSV () {
-console.log("1.getDirectoryCSV ()",dir)
-$.ajax({
-    //This will retrieve the contents of the folder if the folder is configured as 'browsable'
-    url: dir,
-    success: function (data) {
-      //console.log("entering",data)
-        //List all png file names in the page
-        //console.log("success")
-        $(data).find("a:contains(" + fileextension + ")").each(function () {
-          console.log("This string behaves link a mountain lion.")
-//This is the error area 
-//VM1854:265 4.parser( http:///github/Heavy-Lifting-Version-1/20160301 )
-//This is case sensitive , I.e dont use capital letters in directory strucutre or anywhere in project directories.
-var filename = this.href.replace(window.location.host, "").replace("http:///shiftbulk/monitoring/", "");
-var filename = filename.replace(".csv", "");
-          //console.log(filename)
-          eventData.push(
-          {
-            "date":filename,
-            "badge":false,
-            "title":"Click to Show Data",
-            "body":null,
-            "footer":null,
-            "classname":null,
-            "loaded":false,
-            "statsloaded":false,
-            "averageTPHboom" : 0,
-            "averageTPHscale" : 0,
-            "coloums":{}
-          }
-          )
-        });
-
-
-
-         eventData.push(
-          {
-            "date":'20171001',
-            "badge":false,
-            "title":"Click to Show Data",
-            "body":null,
-            "footer":null,
-            "classname":null,
-            "loaded":false,
-            "statsloaded":false,
-            "averageTPHboom" : 0,
-            "averageTPHscale" : 0,
-            "coloums":{}
-          }
-          )
-
-                  eventData.push(
-          {
-            "date":'20171002',
-            "badge":false,
-            "title":"Click to Show Data",
-            "body":null,
-            "footer":null,
-            "classname":null,
-            "loaded":false,
-            "statsloaded":false,
-            "averageTPHboom" : 0,
-            "averageTPHscale" : 0,
-            "coloums":{}
-          }
-          )
-
-
-                           eventData.push(
-          {
-            "date":'20171003',
-            "badge":false,
-            "title":"Click to Show Data",
-            "body":null,
-            "footer":null,
-            "classname":null,
-            "loaded":false,
-            "statsloaded":false,
-            "averageTPHboom" : 0,
-            "averageTPHscale" : 0,
-            "coloums":{}
-          }
-          )
-
-        //var obj = JSON.stringify(eventData, undefined, 4);
-        //poulate the loading table
-        printTable()
-        parseAll();
+///////////////////////////// 
+//////  INITIALISE    //////
+/////////////////////////// 
+function getScada(){
+  jQuery.ajax({
+   'async': true,
+   'global': false,
+   'url': '/entanglement/getscada',
+   'success': function (dataSchemaObject) {
+     var scadadata = JSON.parse(dataSchemaObject)
+     for (var i = 0; i < scadadata.length; i++) {
+      for (var j = 0; j < scadadata[i].entry.length; j++) {
+        var temp = scadadata[i].entry[j]
+        var name = temp.date
+        var b = "-";
+        var position = 4;
+        var output = [name.slice(0, position), b, name.slice(position)].join('');
+        var b = "-";
+        var position = 7;
+        var output = [output.slice(0, position), b, output.slice(position)].join('');
+        calendarData.push({
+          "date":output,
+          "badge":true,
+          "title":"Tonight",
+          "body":"<p class=\"lead\">Party<\/p><p>Like it's 1999.<\/p>",
+          "footer":"At Paisley Park",
+          "classname":"purple-event",
+          "entry": scadadata[i].entry[j]
+        })
       }
+    }
+    $("#my-calendars").zabuto_calendar({
+      data:   calendarData,
+      cell_border: true,
+      today: true,
+      show_previous: 12,
+      show_next: 12,
+      legend: [
+        {type: "text", label: "Data on server", badge: "00"}
+      ],
     });
+  }
+});
 }
 
+
+/////////////////////
+/// ADD CALENDER ///
+///////////////////
+function loadCalendar(calendarData) {
+  //console.log(eventData)
+  $("#my-calendars").zabuto_calendar({
+    data:   calendarData,
+    cell_border: true,
+    today: true,
+    show_previous: 12,
+    show_next: 12,
+  });
+}
+
+
+//////////////////////
+/// EVENT LISTNER ///
+////////////////////
+  var input_file = $("#multiSelect");
+  input_file.on("change", function () {
+   var files = input_file.prop("files")
+   var names = $.map(files, function (val) { return val.name; });
+   $.each(names, function (i, name) {
+    var name = name.replace(".csv", "");
+
+var b = "-";
+var position = 4;
+var output = [name.slice(0, position), b, name.slice(position)].join('');
+var b = "-";
+var position = 7;
+var output = [output.slice(0, position), b, output.slice(position)].join('');
+  calendarData.push({
+    "date":output,
+    "badge":true,
+    "title":"Tonight",
+    "body":"<p class=\"lead\">Party<\/p><p>Like it's 1999.<\/p>",
+    "footer":"At Paisley Park",
+    "classname":"purple-event"
+  })
+
+ 
+    eventData.push(
+    {
+      "date":name,
+      "badge":true,
+      "title":"Click to Show Data",
+      "body":null,
+      "footer":null,
+      "classname":null,
+      "loaded":false,
+      "statsloaded":false,
+      "averageTPHboom" : 0,
+      "averageTPHscale" : 0,
+      "coloums":{}
+    }
+    )
+  });
+  loadCalendar(calendarData)
+   printTable()
+   parseAll();
+ });
 
 
 ////////////////////////////
@@ -256,7 +281,6 @@ $( "#singlebutton" ).click(function() {
       };
     };
   }
-
   var eventDataNew=[]
 //This is not completly nescassary.
 for (var j = 0; j < eventData.length; j++) {
@@ -269,11 +293,11 @@ for (var i = 0; i < inp.files.length; ++i) {
   var file = inp.files.item(i).name;
   fileObjects.push(inp.files.item(i));
 }
-
 //first run.
 counter = 0;
 parseQue();
 });
+
 
 //////////////////////////////////
 // PARSE FUNCTION QUE FUNCTION //
@@ -281,7 +305,6 @@ parseQue();
 function parseQue(){
 //require string name of file
 //requrie file object array
-console.log('parseQue()')
 try {
   names = fileObjects[counter].name;
   names = names.replace(".csv", "");
@@ -290,6 +313,23 @@ try {
 catch (e) {
    // statements to handle any exceptions
    console.log("error here or complete",e)
+for (var i = 0; i < eventData.length; i++) {
+  for (key in eventData[i].coloums) {
+    var keys = key.replace('.','-')
+    eventData[i].coloums[keys] = eventData[i].coloums[key]
+    delete eventData[i].coloums[key]
+  }
+} 
+console.log(eventData)
+  var primer ={}
+  //primer.entry = {"eventData"}
+  primer.entry = JSON.parse(JSON.stringify(eventData)) 
+  primer.elementID = ''
+  primer.revision = 'created'
+  primer.active = "true"
+  //Jquery send to server
+  console.log('working',primer)
+  demodata(primer)
  }
 }
 
@@ -297,16 +337,16 @@ catch (e) {
 // PARSE FUNCTION FOR STATS //
 /////////////////////////////
 function parserStats(file,fileObjecto){
-  averageCounttph1 = 0;
-  averageCounttph2 = 0;
   console.log("Start Processing :",file)  
+  var averageCounttph1 = 0;
+  var averageCounttph2 = 0;
   var start = new Date().getTime();
   var config = {
     worker: true,
   //download:true,
   header: true,
   dynamicTyping: true,
-  //preview: 1000,
+  //preview: 1,
   fastMode: true,
   step:function(results){
     //carry the file variable through to the complete function
@@ -327,6 +367,8 @@ function parserStats(file,fileObjecto){
 actualData = results.data[0][key]
 compressedData = eventData[i]["coloums"][key]
 //Maximum function
+ 
+ 
 if (actualData>compressedData["Max"]) {
   compressedData["Max"]=actualData
 };
@@ -336,6 +378,9 @@ if (actualData<compressedData["Min"]) {
 };
 //Counting function
 compressedData["Count"]=compressedData["Count"]+1
+ 
+
+
 
 //Sum function , there are major issues with the length of the number string .
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -421,12 +466,12 @@ complete: function(file) {
       //if the file name matches the date
       //console.log(i)
       if (eventData[i]["date"]==files) {
-        
+
         //then loop through the coloums
         for (var key in eventData[i]["coloums"]) {
             //console.log(key)
 
-            console.log('Step 1 of compiling data')
+            //console.log('Step 1 of compiling data')
 
     ////////////////////////////////////////
     // AVERAGEING AREA BULK AVERAGE DATA //
@@ -447,7 +492,7 @@ complete: function(file) {
       eventData[i]["averageTPHboom"]=(eventData[i]["coloums"][key]["Sum"]/averageCounttph2).toFixed(2)
       break;
     }
-    console.log('Step 2 of compiling data')                           
+    //console.log('Step 2 of compiling data')                           
 
     //////////////////////////////////
     //        Complile data        //
@@ -465,7 +510,7 @@ complete: function(file) {
       "Sum" : parseFloat(eventData[i]["coloums"][key]["Sum"]),
     }
     
-    console.log('Step 3 of compiling data')
+    //console.log('Step 3 of compiling data')
 
     /////////////////////////////////
     // Populate the Stats Table    //
@@ -498,32 +543,9 @@ complete: function(file) {
     //console.log(eventData[i]["coloums"][key])
   }
   console.log("Finished Loading :",files)
-
         //write the eventData variable to JSON file.
-
-
-/*
-        $.ajax
-        ({
-          type: "POST",
-          dataType : 'json',
-          async: true,
-          url: 'http://localhost/Github/Heavy-Lifting/save_json.php',
-          data: { data: JSON.stringify(eventData,undefined,3) },
-          success: function () {
-
-          },
-          failure: function() {alert("Error!");}
-        });
-*/
-
-
-
-        console.log("saved json/temp.json")
         eventData[i]["statsloaded"]=true
-        console.log('printTable activates here')
         printTable()
-
         //This is the table printing area of the averages ( over 100 TPH )
         $('#average').html('')
         for (var i = 0; i < averageArray.length; i++) {
@@ -540,32 +562,25 @@ complete: function(file) {
           } else {
             html+= averageArray[i][2]
           }
-          
-
           html+="</td></tr>"
           $('#average').append(html)
         }
         console.log(averageArray)
-
         //increment counter.
         counter = counter + 1; 
         parseQue()
-
-
       };
     };
   }
 }
-
 Papa.parse(fileObjecto,config)
-
 }
 
 /////////////////////////////////////////////////
 // PARSE FUNCTION TO POULATE JSON WITH HEADERS //
 /////////////////////////////////////////////////
 function parser(file){
- console.log("4.parser(",file,")")
+ //console.log("4.parser(",file,")")
  var start = new Date().getTime();
  var config = {
     //ther is some kind of issue here with the worker creation , another unkown bug...
@@ -605,9 +620,9 @@ function parser(file){
     var time = end - start;
   }
 }
-console.log(dir+file+".csv starting Here")
+//console.log(dir+file+".csv starting Here")
 //console.log("repeat error location , accociated with the replace function below. To fix change the replace directory name .")
-console.log("http://localhost/github/Heavy-Lifting-Version-1/"+dir+file+".csv")
+//console.log("http://localhost/github/Heavy-Lifting-Version-1/"+dir+file+".csv")
 Papa.parse(dir+file+".csv",config)
 
 }
@@ -623,10 +638,6 @@ function parseAll(){
 }
 
 
-
-
-
-
 ////////////////////////////////
 // POPULATE THE TABLE TO VIEW //
 ///////////////////////////////
@@ -636,26 +647,18 @@ function printTable(){
   arrayLength= eventData.length
   $( "#datedetail" ).html("")
   for (var i = 0; i < eventData.length; i++) {
-
     firstCounter=firstCounter+1;
-
     if (eventData[i]["loaded"]==true) {
-
       if (eventData[i]["statsloaded"]==true) {
         $( "#datedetail" ).append("<tr><td>"+eventData[i]["date"]+"</td><td style='background:#337ab7;color:white'>"+eventData[i]["loaded"]+"</td><td style='background:#337ab7;color:white'>"+eventData[i]["statsloaded"]+"</td></tr>")  
       } else {
         $( "#datedetail" ).append("<tr><td>"+eventData[i]["date"]+"</td><td style='background:#337ab7;color:white'>"+eventData[i]["loaded"]+"</td><td>"+eventData[i]["statsloaded"]+"</td></tr>")  
       };
-
     };
-
     if (eventData[i]["loaded"]==false) {
       $( "#datedetail" ).append("<tr><td>"+eventData[i]["date"]+"</td><td>"+eventData[i]["loaded"]+"</td><td>"+eventData[i]["statsloaded"]+"</td></tr>")     
     }
-
   };
-
-
   if (firstCounter==arrayLength) {
     $('#singlebutton').prop('disabled', false);
     $('#JSONDISK').prop('disabled', false);
@@ -706,6 +709,20 @@ dataStats = [{"Tag":"DateTime","greaterThan":0,"lessThan":0,"betweenlower":0,"be
 {"Tag":"E641_SR01_WT02.STA_Analog","greaterThan":1350,"lessThan":-1750,"betweenlower":0,"betweenHigher":1350,"notBetweenlower":1350,"notBetweenHigher":-1750},
 {"Tag":"E641_SR01_ZT11.STA_PV","greaterThan":0,"lessThan":0,"betweenlower":0,"betweenHigher":1000,"notBetweenlower":0,"notBetweenHigher":1000}]
 
+function demodata(primer){
 
+jQuery.ajax({
+  'url': '/entanglement/createscada',
+  'type': 'POST', 
+  'dataType': 'json',
+  'contentType': 'application/json', 
+  'data': JSON.stringify(primer),
+ 
+});  
+}
 
 </script>
+{{else}}
+<a class="btn btn-primary" href="/signin">Signin</a>
+
+  {{/if}}

@@ -46,9 +46,6 @@ exports.brief = function(req, res) {
 /////  DATABASE    ///// 
 ///////////////////////
 exports.monitoring = function(req, res) {
-
-
-
   //Determine how many forms exist on the server.
   var query1 = formsModel.find().limit(12)
   query1.exec(function (err, results) {
@@ -79,8 +76,6 @@ debugging(req,debugMode)
   }).
   exec(function (err, docs1) {
     if(err){console.log('Error Here'); return;}   
-
-
     if(docs1){
       for (var i = 0; i < docs1.length; i++) {
         //the menu item elementid should arrive poulated to avoid confusion.
@@ -91,8 +86,6 @@ debugging(req,debugMode)
     } else {
       console.log('docs1 failed')
     } 
-
-
 /*
 console.log('-----------groups------------')
 console.log('docs1 : ',JSON.stringify(docs1))

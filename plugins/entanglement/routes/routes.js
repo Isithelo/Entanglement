@@ -123,7 +123,9 @@ var directory = '../../../plugins/entanglement/'
 
 // Controllers
 var createController = require(directory+'controllers/create'); 
+var createScadaController = require(directory+'controllers/createscada'); 
 var readController = require(directory+'controllers/read');
+var readScadaController = require(directory+'controllers/readscada');
 
 ///////////////////////////   THESE ROUTES CAN BE REMOVED FOR CUSTOM SITES   ///////////////////////////
 var entanglementController = require(directory+'controllers/entanglementpages'); 
@@ -141,7 +143,10 @@ app.get('/monitoring', entanglementController.monitoring);
 ///////////////////////////////////////
 app.post('/entanglement/createform', createController.create);
  
-
+////////////////////////////////////////////////
+////       CREATE SCADAA CONTROLLERS       //// 
+//////////////////////////////////////////////
+app.post('/entanglement/createscada', createScadaController.create);
 
 /////////////////////////////////////////
 ////       READ CONTROLLERS         //// 
@@ -154,6 +159,12 @@ app.get('/entanglement/templatename', readController.templatename);//get the sel
 app.get('/entanglement/getdatacomp', readController.getdatacomp);//get data by array of ids.
 app.get('/entanglement/getform',  readController.getform);//search for the form to load.
 app.get('/entanglement/groups', readController.groups);//get the select groups
+
+/////////////////////////////////////
+////       READ SCADA DATA      //// 
+///////////////////////////////////
+app.get('/entanglement/getscada', readScadaController.getscada);
+
 
 //last line
 module.exports = app;

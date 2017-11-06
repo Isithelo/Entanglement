@@ -1,21 +1,25 @@
 
 <h1>SQL Query Creator</h1>
+<p>Downloading of CSV's is performed via a remote desktop interface on the Wonderware server. Click on the date below to generate the query for acquiring the daily SCADA data.</p>
 <p></p>
 <div class="row">
   <div class="col-md-6">
-                 <div style="text-align:center" ><div id="my-calendar"></div></div>
+   <div style="text-align:center" ><div id="my-calendar"></div></div>
+ </div>
+ <div class="col-md-6">
+  <div class="alert alert-info" role="alert"  >    
+    <h3>Instructions</h3>  
+    <li>Click on the Date to download</li>
+    <li>Copy the SQL text into the SQL area on the Query Program on the remote desktop.</li>
+    <li>Save the CSV in the FORMAT 2015-01-01, i.e the specific day that is extracted.</li>
+    <li>Copy the CSV into the SCADA directory in the web root.</li>
+    <p></p>
   </div>
-  <div class="col-md-6">
-                  <li>Click on the Date to download</li>
-                  <li>Copy the SQL text into the SQL area on the Query Program on the remote desktop.</li>
-                  <li>Save the CSV in the FORMAT 2015-01-01, i.e the specific day that is extracted.</li>
-                  <li>Copy the CSV into the SCADA directory in the web root.</li>
-             <p></p>
-             <h5>Date History</h5>
-<p id="dates"></p>
-  </div>
+  <h5>Date History</h5>
+  <p id="dates"></p>
 </div>
-          <h3>Generated SQL Query</h3>
+</div>
+<h3>Generated SQL Query</h3>
 <pre id="SQLarea"></pre>
 <script type="text/javascript">
 

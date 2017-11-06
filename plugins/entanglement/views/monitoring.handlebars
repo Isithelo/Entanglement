@@ -2,6 +2,13 @@
   <div class="col-md-11">
     <h1>Monitoring</h1>
     <p>SCADA CSV Processing and Data viewing.</p>
+
+
+    <div class="row">
+      <div class="col-md-8"><div id="cal-heatmap" style="overflow: auto;text-align: center;"></div></div>
+      <div class="col-md-4"><div id="onClick-placeholder">Only items in color are available on the server.</div></div>
+    </div>
+
   </div> 
   {{#if user}}
   <div class="col-md-1" style="text-align: right">
@@ -57,7 +64,7 @@ function loadformModalEntanglement(formdata,idItem,raw,parentid,headings,entry){
   <div class="col-md-4" id="navMenuPanel" style="min-height: 450px">
     <div id="myProgress">
       <div id="myBar"> </div>
-    </div>
+    </div> 
     <h5><strong>Navigation</strong> <small>  Use the navigation tree to interact with the database.</small></h5>
     <div class=" ">
      <div style="padding-bottom:15px;padding-bottom:15px">
@@ -65,16 +72,28 @@ function loadformModalEntanglement(formdata,idItem,raw,parentid,headings,entry){
     </div>
     <div id="jstree"></div> 
   </div>
+
   <div class="btn-group" role="group" aria-label="..." style="padding-bottom: 15px">
   </div>
 </div>  
 <div class="col-md-8" id="browserArea">
   <div id="panel">  
-<div class="awesome"><div style="background-color: #fff !important;padding: 5px"><div style="padding:25px"><h3>Heads up! <small>Click on the nodes of the navigation tree to interact with the site.</small></h3><div style="text-align: center"><p>To get started view the <a href="/documentation">Documentation section</a> on this site or sign in / sign up.</p></div> </div></div></div>
-  </div>
+    <div class="awesome"><div style="background-color: #fff !important;padding: 5px"><div style="padding:25px"><h3>Heads up! <small>Click on the nodes of the navigation tree to interact with the site.</small></h3><div style="text-align: center"><p>To get started view the <a href="/documentation">Documentation section</a> on this site or sign in / sign up.</p></div> </div></div></div>
   </div>
 </div>
 </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 <script type="text/javascript">
 
@@ -83,6 +102,8 @@ function loadformModalEntanglement(formdata,idItem,raw,parentid,headings,entry){
   var navmenuHeadings = ['detail','description','icon','buttons','tabs','parent','template','value']
   var databaseMenu = []
   var temp =[]
+  var calendarData =[]
+
 
 /////////////////////////////
 ////     DEBUG AREA     //// 
@@ -109,7 +130,7 @@ function jstreeGet(ids){
      var dataSchemaObject = JSON.parse(dataSchemaObject)
 
       //Add the headings to the page.
- 
+
       $('#panel').html('<div class="awesome"><div style="background-color: #fff !important;padding: 5px"><div style="padding:25px"><h3>Heads up! <small>Click on the nodes of the navigation tree to interact with the site.</small></h3><div style="text-align: center"><p>To get started view the <a href="/documentation">Documentation section</a> on this site or sign in / sign up.</p></div> </div></div></div>')
       var dataSchemaObject1 = fitstFormat(dataSchemaObject.children)
       //manipulate data to work with the jstree
@@ -144,8 +165,90 @@ function fitstFormat(databaseMenu){
 //////  INITIALISE    //////
 /////////////////////////// 
 $( document ).ready(function() {
+  getScada()
   jstreeGet(databaseid)
+  
 });
+
+
+ ///////////////////////////// 
+//////  HEAT MAP      //////
+/////////////////////////// 
+function heatmap(datas){
+  $('#cal-heatmap').html('')
+  var parserData = function (data) {
+    var dataJSON = {};
+    for(var i=0; i<data.length; i++) {
+    var date = new Date(data[i].date); // Date of activity 
+    var sec = date.getTime()/1000; // Convert to sec
+    // Pair "Key-Value" for calendar data
+    if(dataJSON[sec]) {
+      dataJSON[sec]++;
+    } else {
+      dataJSON[sec] = 1;
+    }
+  }
+  return dataJSON;
+}
+var cal = new CalHeatMap();
+cal.init({
+ itemSelector: "#cal-heatmap",
+ domain: "month",
+ subDomain: "day",
+ legendColors: {
+  empty: "#ededed",
+  min: "#ededed",
+  max: "#337ab7",
+},    
+onClick: function(date, nb) {
+  $("#onClick-placeholder").html("<b>" +
+    date + "</b> <br/>with <b>" +
+    (nb === null ? "0" : nb) + "</b> items<p></p>"
+    );
+  $("#onClick-placeholder").append("<a onclick='viewItem(this.id)' id='"+date+"' class='btn btn-default'>View</a>");
+},
+legend: [1,2,3,4,5],
+itemNamespace: "domainDynamicDimension",
+ // range: 11,
+//start: new Date(2016, 10),
+range: 9,
+  start:moment.utc(moment().subtract(8, 'months')).valueOf(),//get moment less range -1 months , then convert to UTC value of for cal heat map.
+   data: datas, // Dates Array
+   afterLoadData: parserData      // Parser function
+ });
+}
+
+///////////////////////////////// 
+//////  GET SCADA DATA    //////
+/////////////////////////////// 
+function getScada(){
+  jQuery.ajax({
+   'async': true,
+   'global': false,
+   'url': '/entanglement/getscada',
+   'success': function (dataSchemaObject) {
+     var scadadata = JSON.parse(dataSchemaObject)
+     for (var i = 0; i < scadadata.length; i++) {
+      for (var j = 0; j < scadadata[i].entry.length; j++) {
+        var temp = scadadata[i].entry[j]
+        var name = temp.date
+        var b = "-";
+        var position = 4;
+        var output = [name.slice(0, position), b, name.slice(position)].join('');
+        var b = "-";
+        var position = 7;
+        var output = [output.slice(0, position), b, output.slice(position)].join('');
+        calendarData.push({
+          "date":output,
+          "badge":false,
+          "entry": scadadata[i].entry[j]
+        })
+      }
+    }
+    heatmap(calendarData)
+  }
+});
+}
 
 /////////////////////////////////////////
 //////  DATACONVERT FOR JSTREE    //////
