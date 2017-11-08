@@ -4,6 +4,8 @@
 <div id="selectedMarker"></div>
 
 <script type="text/javascript">
+console.log( 'Template Loading : plugins/entanglement/views/analytics/tempo' )
+console.log( '--------------------------------------------------------------')
     var data =[];
     var seriesChart = []
     var colours = [
@@ -28,7 +30,7 @@ $('document').ready(function(){
 function getdata(){
     var BoomScale=[]
     var ConveyorScale=[]    
-    
+    var catagories=[]
     for (var i = 0; i < calendarData.length; i++) {
             //console.log(calendarData[i]['entry']["coloums"])
             if ( isNaN(parseFloat(calendarData[i]['entry']["averageTPHboom"])) ){
@@ -41,6 +43,7 @@ function getdata(){
         } else {
             ConveyorScale.push(parseFloat(calendarData[i]['entry']["averageTPHscale"] ))
         };    
+        catagories.push(calendarData[i]["date"])
     };
     seriesChart.push(
     {
@@ -73,10 +76,8 @@ function getdata(){
         color: 'red'
     }
     )
-    catagories=[]
-    for (var i = 0; i < calendarData.length; i++) {
-        catagories.push(calendarData[i]["date"])
-    };
+    
+    
 //array.sortBy(function(o){ return o.date });
 highchartsStats(seriesChart,catagories)
 }

@@ -9,7 +9,7 @@
 <div class="row">
 
 
- 
+   
 
 
 </div>
@@ -18,7 +18,8 @@
 
 
 <script type="text/javascript">
-
+    console.log( 'Template Loading : plugins/entanglement/views/analytics/stats' )
+    console.log( '--------------------------------------------------------------')
 
     var data =[];
     var seriesChart = []
@@ -34,7 +35,7 @@
 //////  INITIALISE    //////
 /////////////////////////// 
 $('document').ready(function(){
- getdata()
+   getdata()
 })
 
 
@@ -42,19 +43,15 @@ $('document').ready(function(){
 //////  FORMAT FOR HIGHCHARTS    //////
 //////////////////////////////////////
 function getdata(){
-
-
   var cylinderMax=[]
   var BoomScale=[]
   var ConveyorScale=[]    
-
   var BoomScaleTotal=0
   var ConveyorScaleTotal=0  
-
   var AverageTPH = 0;
   var AverageTPH1 = 0;
   var count = 0;
-
+  var catagories=[]
 
   for (var i = 0; i < calendarData.length; i++) {
         //console.log(calendarData[i]['entry']["coloums"])
@@ -65,9 +62,8 @@ function getdata(){
         count = count + 1 ;
         BoomScaleTotal  = BoomScaleTotal + ((calendarData[i]['entry']["coloums"]["E641_CV01_WIT01A-STA_Analog"]["Sum"]/3600)  )
         ConveyorScaleTotal = ConveyorScaleTotal + ((calendarData[i]['entry']["coloums"]["E790_WE01_WIT01a-STA_Analog"]["Sum"]/3600)  )
+        catagories.push(calendarData[i]["date"])
     };
-
-
     seriesChart.push(
     {
         data: BoomScale,
@@ -102,10 +98,7 @@ function getdata(){
     }
     )
 
-    catagories=[]
-    for (var i = 0; i < calendarData.length; i++) {
-     catagories.push(calendarData[i]["date"])
- };
+    
 
  //array.sortBy(function(o){ return o.date });
 
@@ -116,7 +109,7 @@ function getdata(){
 
 
 function highchartsStats(seriesChart,catagories) {
-   jQuery('#containers').highcharts({
+ jQuery('#containers').highcharts({
     title: {
         text: 'Daily Tonnage Moved by Bucket Wheel Reclaimer',
             x: -20 //center

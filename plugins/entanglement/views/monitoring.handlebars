@@ -128,9 +128,7 @@ function jstreeGet(ids){
     'global': false,
     'success': function (dataSchemaObject) {
      var dataSchemaObject = JSON.parse(dataSchemaObject)
-
       //Add the headings to the page.
-
       $('#panel').html('<div class="awesome"><div style="background-color: #fff !important;padding: 5px"><div style="padding:25px"><h3>Heads up! <small>Click on the nodes of the navigation tree to interact with the site.</small></h3><div style="text-align: center"><p>To get started view the <a href="/documentation">Documentation section</a> on this site or sign in / sign up.</p></div> </div></div></div>')
       var dataSchemaObject1 = fitstFormat(dataSchemaObject.children)
       //manipulate data to work with the jstree
@@ -243,8 +241,21 @@ function getScada(){
           "badge":false,
           "entry": scadadata[i].entry[j]
         })
+
+
+
+ 
       }
     }
+calendarData.sort(function(a, b){
+       var dateA=new Date(a.date), dateB=new Date(b.date)
+    return dateA-dateB //sort by date ascending
+})
+
+for (var i = 0; i < calendarData.length; i++) {
+  console.log(calendarData[i].date)
+}
+
     heatmap(calendarData)
   }
 });

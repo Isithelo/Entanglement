@@ -3,20 +3,20 @@
 <p>Downloading of CSV's is performed via a remote desktop interface on the Wonderware server. Click on the date below to generate the query for acquiring the daily SCADA data.</p>
 <p></p>
 <div class="row">
-  <div class="col-md-6">
-   <div style="text-align:center" ><div id="my-calendar"></div></div>
- </div>
- <div class="col-md-6">
-  <div class="alert alert-info" role="alert"  >    
-    <h3>Instructions</h3>  
-    <li>Click on the Date to download</li>
-    <li>Copy the SQL text into the SQL area on the Query Program on the remote desktop.</li>
-    <li>Save the CSV in the FORMAT 2015-01-01, i.e the specific day that is extracted.</li>
-    <li>Copy the CSV into the SCADA directory in the web root.</li>
-    <p></p>
-  </div>
-  <h5>Date History</h5>
-  <p id="dates"></p>
+<div class="col-md-6">
+<div style="text-align:center" ><div id="my-calendar"></div></div>
+</div>
+<div class="col-md-6">
+<div class="alert alert-info" role="alert"  >    
+<h3>Instructions</h3>  
+<li>Click on the Date to download</li>
+<li>Copy the SQL text into the SQL area on the Query Program on the remote desktop.</li>
+<li>Save the CSV in the FORMAT 2015-01-01, i.e the specific day that is extracted.</li>
+<li>Copy the CSV into the SCADA directory in the web root.</li>
+<p></p>
+</div>
+<h5>Date History</h5>
+<p id="dates"></p>
 </div>
 </div>
 <h3>Generated SQL Query</h3>
@@ -36,41 +36,41 @@ var eventData=[];
 // ADD CALENDER //
 //////////////////
 function loadCalendar() {
-  $("#my-calendar").zabuto_calendar({
-    data: eventData,
-    cell_border: true,
-    today: true,
- 
-    show_previous: 12,
-    show_next: 12,
-    action: function () {
-      $("#loading").attr('style', 'width:5%');
-      return myDateFunction(this.id);
-    }
-  });
+$("#my-calendar").zabuto_calendar({
+data: eventData,
+cell_border: true,
+today: true,
+
+show_previous: 12,
+show_next: 12,
+action: function () {
+$("#loading").attr('style', 'width:5%');
+return myDateFunction(this.id);
+}
+});
 }
 
 ///////////////////////
 // CALENDER DATA ADD //
 //////////////////////
 function myDateFunction(id) {
-  $("#date-popover").hide();
-  var date = $("#" + id).data("date");
-  var hasEvent = $("#" + id).data("hasEvent");
-  console.log(date)
-  eventDatas(date)
+$("#date-popover").hide();
+var date = $("#" + id).data("date");
+var hasEvent = $("#" + id).data("hasEvent");
+console.log(date)
+eventDatas(date)
 
-  return true;
+return true;
 }
 
 //////////////////////////
 // CALENDER DATA LISTNER//
 //////////////////////////
 function myNavFunction(id) {
-  $("#date-popover").hide();
-  var nav = $("#" + id).data("navigation");
-  var to = $("#" + id).data("to");
-  console.log('nav ' + nav + ' to: \ + to.month' + '/' + to.year);
+$("#date-popover").hide();
+var nav = $("#" + id).data("navigation");
+var to = $("#" + id).data("to");
+console.log('nav ' + nav + ' to: \ + to.month' + '/' + to.year);
 }
 
 function eventDatas(date){
@@ -84,7 +84,7 @@ $( "#SQLarea" ).append("<p>WHERE wwRetrievalMode = 'Cyclic'</p>")
 $( "#SQLarea" ).append('<p>AND wwResolution = 1000</p>')
 $( "#SQLarea" ).append("<p>AND wwVersion = 'Latest'</p>")
 $( "#SQLarea" ).append("AND DateTime >= '")
-  $( "#SQLarea" ).append(moment(date).format('YYYYMMDD'));
+$( "#SQLarea" ).append(moment(date).format('YYYYMMDD'));
 $( "#SQLarea" ).append(" 06:00:00.000'</p>")
 $( "#SQLarea" ).append("AND DateTime <= '");
 $( "#SQLarea" ).append(moment(date).add(1, 'days').format('YYYYMMDD'));
@@ -94,25 +94,25 @@ $('#SQLarea').select()
 }
 
 
-        loadCalendar()
+loadCalendar()
 var obj = JSON.stringify(eventData, undefined, 4);
- 
+
 $( "#datedetail" ).append(obj)
 
 $(document).on('click', 'pre', function () {
- 
-  if (this.select) {
-    this.select();
-  }
-  else if (document.selection) {
-    var range = document.body.createTextRange();
-    range.moveToElementText(this);
-    range.select();
-  } else if (window.getSelection) {
-    var range = document.createRange();
-    range.selectNode(this);
-    window.getSelection().addRange(range);
-  }
+
+if (this.select) {
+this.select();
+}
+else if (document.selection) {
+var range = document.body.createTextRange();
+range.moveToElementText(this);
+range.select();
+} else if (window.getSelection) {
+var range = document.createRange();
+range.selectNode(this);
+window.getSelection().addRange(range);
+}
 });
 
 </script>

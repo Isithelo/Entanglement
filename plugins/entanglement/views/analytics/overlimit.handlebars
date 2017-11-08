@@ -14,8 +14,9 @@
 
 
 <script type="text/javascript">
- 
- 
+   
+    console.log( 'Template Loading : plugins/entanglement/views/analytics/overlimt' )
+    console.log( '-----------------------------------------------------------------')
 
     var data =[];
     var seriesChart = []
@@ -31,7 +32,7 @@
 //////  INITIALISE    //////
 /////////////////////////// 
 $('document').ready(function(){
- getdata()
+   getdata()
 })
 
 
@@ -39,25 +40,25 @@ $('document').ready(function(){
 //////  FORMAT FOR HIGHCHARTS    //////
 //////////////////////////////////////
 function getdata(){
- 
-        var cylinderMax=[]
-        var cylinderMin=[]
-        var cylinderMax1=[]
-        var cylinderMin1=[]    
-        for (var i = 0; i < calendarData.length; i++) {
+    var cylinderMax=[]
+    var cylinderMin=[]
+    var cylinderMax1=[]
+    var cylinderMin1=[]   
+    var catagories=[]
+    for (var i = 0; i < calendarData.length; i++) {
         //console.log(calendarData[i]['entry']["coloums"])
         cylinderMin.push(calendarData[i]['entry']["coloums"]["E641_SR01_WT01-STA_Analog"]["lessThan"]/calendarData[i]['entry']["coloums"]["E641_SR01_WT01-STA_Analog"]["Count"]*100)
         
         cylinderMin1.push(calendarData[i]['entry']["coloums"]["E641_SR01_WT02-STA_Analog"]["lessThan"]/calendarData[i]['entry']["coloums"]["E641_SR01_WT02-STA_Analog"]["Count"]*100)
-        
+        catagories.push(calendarData[i]["date"])
     };
 
     seriesChart.push(
     {
-     data: cylinderMin,
-     color: colours[2],
-     name : "E641_SR01_WT01-STA_Analog",
-     marker: {
+       data: cylinderMin,
+       color: colours[2],
+       name : "E641_SR01_WT01-STA_Analog",
+       marker: {
         fillColor: 'white',
         lineWidth: 2,
         lineColor: colours[2]
@@ -74,23 +75,20 @@ function getdata(){
     },
 }
 )
-    catagories=[]
-    for (var i = 0; i < calendarData.length; i++) {
-       catagories.push(calendarData[i]["date"])
-   };
+    
 
     //console.log(calendarData)
     highchartsAgain(seriesChart,catagories)
 }
 
 
- 
 
 
-    function highchartsAgain(seriesChart,catagories) {
-       jQuery('#container').highcharts({
-        title: {
-            text: 'Overlimit Operation % of Cylinders ',
+
+function highchartsAgain(seriesChart,catagories) {
+ jQuery('#container').highcharts({
+    title: {
+        text: 'Overlimit Operation % of Cylinders ',
             x: -20 //center
         },
         chart: {
@@ -144,6 +142,6 @@ function getdata(){
         },
         series: seriesChart
     });
-   }
+}
 
 </script>
