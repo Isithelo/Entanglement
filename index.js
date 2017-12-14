@@ -182,33 +182,18 @@ app.locals.repo = repo
 ///////////////////////////////
 ////       ROUTING        //// 
 /////////////////////////////
-//FRATERNATE
-//Set Handlebars view directory for plugins
-app.set('views', path.join(__dirname, 'plugins/fraternate/views/'));
-//Fratenate Routing
-var fraternateRouting = require('./plugins/fraternate/routes/routes');
-app.use('/', fraternateRouting);
 
-//WRASSE
-//Set Handlebars view directory for plugins
-app.set('views', path.join(__dirname, 'plugins/wrasse/views/'));
-//Wrasse Routing
-var wrasseRouting = require('./plugins/wrasse/routes/routes');
-app.use('/', wrasseRouting);
+///////////////////////////////////////////////
+////       FRATERNATE NPM MODULE          //// 
+/////////////////////////////////////////////
+var fraternate = require("fraternate");
+app.use('/', fraternate);
 
-//SEMINI
- //Set Handlebars view directory for plugins
-app.set('views', path.join(__dirname, 'plugins/semini/views/'));
-//Fratenate Routing
-var seminiRouting = require('./plugins/semini/routes/routes');
-app.use('/', seminiRouting);
- 
-//HEAVY-LIFTING
-//Set Handlebars view directory for plugins
-app.set('views', path.join(__dirname, 'plugins/heavylifting/views/'));
-//Fratenate Routing
-var heavyliftingRouting = require('./plugins/heavylifting/routes/routes');
-app.use('/', heavyliftingRouting);
+/////////////////////////////////////////////////
+////       HEAVYLIFTING NPM MODULE          //// 
+///////////////////////////////////////////////
+var heavylifting = require("heavylifting");
+app.use('/', heavylifting);
 
 //ENTANGLEMENT
  //Set Handlebars view directory for plugins

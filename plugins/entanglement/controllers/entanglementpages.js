@@ -1,7 +1,7 @@
  
 var User = require('../../../models/User');
-var formsModel      = require('../../../plugins/semini/models/forms.js');
-var heavyliftingModel      = require('../../../plugins/heavylifting/models/heavylifting.js');
+//var formsModel      = require('../../../plugins/semini/models/forms.js');
+//var heavyliftingModel      = require('../../../node_modules/heavylifting/models/heavylifting.js');
 var braintree = require("braintree");
 
 ////////////////////////////////////////////
@@ -36,6 +36,7 @@ exports.brief = function(req, res) {
       var Formids = results[3]._id
       res.render('../../../plugins/entanglement/views/brief', {
       pagetitle: 'Brief | '+sitename ,
+      siteName : sitename,
       items : JSON.stringify(ids),
       Formids : JSON.stringify(Formids)
     });
@@ -53,6 +54,7 @@ exports.monitoring = function(req, res) {
       var ids = '59fd5eca077e477b30dd0967'
       var Formids = results[3]._id
       res.render('../../../plugins/entanglement/views/monitoring', {
+        siteName : sitename,
       pagetitle: 'Monitoring | '+sitename ,
       items : JSON.stringify(ids),
       Formids : JSON.stringify(Formids)
